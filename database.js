@@ -35,7 +35,47 @@ function getVitalSignByID(req, res) {
             res.status(500)
                 .json({
                     status: 'failed',
-                    message: 'Failed to vitalsign products vsid:' +
+                    message: 'Failed to vitalsign vsid:' +
+                        req.params.id
+                });
+        })
+}
+
+function getCondition(req, res) {
+    db.any('select * from condition')
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'Retrieved condition'
+                });
+        })
+        .catch(function (error) {
+            console.log(error);
+            res.status(500)
+                .json({
+                    status: 'failed',
+                    message: 'Failed to retrieved condition'
+                });
+        })
+}
+
+function getConditionByID(req, res) {
+    db.any('select * from condition where conid =' + req.params.id)
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'Retrieved condition conid:' + req.params.id
+                });
+        })
+        .catch(function (error) {
+            res.status(500)
+                .json({
+                    status: 'failed',
+                    message: 'Failed to condition conid:' +
                         req.params.id
                 });
         })
@@ -114,5 +154,7 @@ function getVitalSignByID(req, res) {
 
 module.exports = {
     getVitalSigns,
-    getVitalSignByID
+    getVitalSignByID,
+    getCondition,
+    getConditionByID
 }

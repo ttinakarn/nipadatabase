@@ -27,6 +27,8 @@ app.get('/api/json', function (req, res) {
 
 app.get('/api/vitalsign/',  db.getVitalSigns);
 app.get('/api/vitalsign/:id', db.getVitalSignByID)
+app.get('/api/condition/', db.getCondition)
+app.get('/api/condition/:id', db.getConditionByID)
 
 // app.get('/api/products/', db.getAllProducts);
 // app.get('/api/products/:id', db.getProductByID);
