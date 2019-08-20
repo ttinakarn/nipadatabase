@@ -24,7 +24,7 @@ var output = {
 app.get('/api/json', function (req, res) {
     res.status(500).json(output);
 });
-
+app.post('/api/vitalsign/',  db.insertVitalSigns);
 app.get('/api/vitalsign/',  db.getVitalSigns);
 app.get('/api/vitalsign/:id', db.getVitalSignByID)
 app.get('/api/condition/', db.getCondition)

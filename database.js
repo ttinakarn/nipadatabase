@@ -81,6 +81,39 @@ function getConditionByID(req, res) {
         })
 }
 
+function insertVitalSigns(req, res) {
+
+    console.log(req.body)
+    db.none('insert into vitalsign(an, temp, pulse, resp, sbp, dbp, o2sat, eye, verbal, motor, urine, painscore, fallrisk, nurseid, remark ,date) ' +
+        'values(${an}, ${temp}, ${pulse}, ${resp}, ${sbp}, ${dbp}, ${o2sat}, ${eye}, ${verbal}, ${motor}, ${urine}, ${painscore}, ${fallrisk}, ${nurseid}, ${remark}, ${date})',
+        req.body)
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    message: 'Inserted one vitalsign'
+                });
+        })
+        .catch(function (error) {
+            console.log('ERROR:', error)
+        })
+}
+
+// function updatevitalsign(req, res) {
+//         db.none('update vitalsign set an=${an}, temp=${temp}, pulse=${pulse}, resp=${resp}, pulse=${pulse}, sbp=${sbp}, pulse=${pulse}, dbp=${dbp}, o2sat=${o2sat}, eye=${eye}, verbal=${verbal}, motor=${motor}, urine=${urine}, painscore=${painscore}, fallrisk=${fallrisk}, remark=${remark}, eye=${eye}, date=${date}' +
+//         'where id=' + req.params.id, req.body)
+//             .then(function (data) {
+//                 res.status(200)
+//                     .json({
+//                         status: 'success',
+//                         message: 'Updated vitalsign'
+//                     });
+//             })
+//             .catch(function (error) {
+//                 console.log('ERROR:', error)
+//             })
+//     }
+
 // function getAllProducts(req, res) {
 //     db.any('select * from products')
 //         .then(function (data) {
@@ -156,5 +189,7 @@ module.exports = {
     getVitalSigns,
     getVitalSignByID,
     getCondition,
-    getConditionByID
+    getConditionByID,
+    insertVitalSigns
+    
 }
