@@ -42,7 +42,7 @@ function getVitalSignByID(req, res) {
 }
 
 function getCondition(req, res) {
-    db.any('select * from condition')
+    db.any('select * from condition order by conid')
         .then(function (data) {
             res.status(200)
                 .json({
@@ -96,14 +96,11 @@ function insertVitalSigns(req, res) {
         })
         .catch(function (error) {
             res.status(401)
-            .json({
-
-            status:'error',
-            message:error.message
-
-            });
+                .json({
+                    status: 'error',
+                    message: error.message
+                });
             console.log('ERROR:', error)
-
         })
 }
 
@@ -199,5 +196,5 @@ module.exports = {
     getCondition,
     getConditionByID,
     insertVitalSigns
-    
+
 }
