@@ -95,7 +95,15 @@ function insertVitalSigns(req, res) {
                 });
         })
         .catch(function (error) {
+            res.status(401)
+            .json({
+
+            status:'error',
+            message:error.message
+
+            });
             console.log('ERROR:', error)
+
         })
 }
 
