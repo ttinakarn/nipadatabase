@@ -2,7 +2,12 @@ const pgp = require('pg-promise')();
 var db = pgp('postgres://grbrxjrhauptjn:19388487ac4fc3ef3eeea4094c17e9aa5fd0774510bdd7db513c481c0ea31d41@ec2-174-129-227-51.compute-1.amazonaws.com:5432/d6b3313j3l8qt5?ssl=true');
 
 function getVitalSigns(req, res) {
-    db.any('select * from vitalsign')
+    db.any(`select bednumber, temp, pulse, resp, sbp, dbp, o2sat, eye, verbal, motor, urine, painscore, fallrisk, remark, name
+    from treatmenthistory inner join vitalsign
+    on vitalsign.an = treatmenthistory.an
+    inner join employee 
+    on vitalsign.empid = employee.empid
+    order by bednumber`)
         .then(function (data) {
             res.status(200)
                 .json({
@@ -22,13 +27,19 @@ function getVitalSigns(req, res) {
 }
 
 function getVitalSignByID(req, res) {
-    db.any('select * from vitalsign where vsid =' + req.params.id)
+    db.any(`select bednumber, temp, pulse, resp, sbp, dbp, o2sat, eye, verbal, motor, urine, painscore, fallrisk, remark, name
+    from treatmenthistory inner join vitalsign
+    on vitalsign.an = treatmenthistory.an
+    inner join employee 
+    on vitalsign.empid = employee.empid
+    where vitalsign.an = '` + req.params.id + `'
+    order by bednumber`)
         .then(function (data) {
             res.status(200)
                 .json({
                     status: 'success',
                     data: data,
-                    message: 'Retrieved vitalsign vsid:' + req.params.id
+                    message: 'Retrieved vitalsign an:' + req.params.id
                 });
         })
         .catch(function (error) {
