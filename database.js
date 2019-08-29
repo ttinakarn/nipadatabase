@@ -114,6 +114,29 @@ function insertVitalSigns(req, res) {
         })
 }
 
+function getBedNumber(req, res) {
+    db.any(`select vitalsign.an, bednumber, max(date)
+    from vitalsign inner join treatmenthistory
+    on vitalsign.an = treatmenthistory.an
+    group by bednumber, vitalsign.an`)
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'Retrieved bed number'
+                });
+        })
+        .catch(function (error) {
+            console.log(error);
+            res.status(500)
+                .json({
+                    status: 'failed',
+                    message: 'Failed to retrieved vital signs'
+                });
+        })
+}
+
 // function updatevitalsign(req, res) {
 //         db.none('update vitalsign set an=${an}, temp=${temp}, pulse=${pulse}, resp=${resp}, pulse=${pulse}, sbp=${sbp}, pulse=${pulse}, dbp=${dbp}, o2sat=${o2sat}, eye=${eye}, verbal=${verbal}, motor=${motor}, urine=${urine}, painscore=${painscore}, fallrisk=${fallrisk}, remark=${remark}, eye=${eye}, date=${date}' +
 //         'where id=' + req.params.id, req.body)
@@ -205,6 +228,6 @@ module.exports = {
     getVitalSignByID,
     getCondition,
     getConditionByID,
-    insertVitalSigns
-
+    insertVitalSigns,
+    getBedNumber
 }
