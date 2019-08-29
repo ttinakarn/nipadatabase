@@ -26,11 +26,12 @@ app.get('/api/json', function (req, res) {
 });
 app.post('/api/vitalsign/',  db.insertVitalSigns);
 app.get('/api/vitalsign/',  db.getVitalSigns);
-app.get('/api/vitalsign/:id', db.getVitalSignByID)
-app.get('/api/condition/', db.getCondition)
+app.get('/api/vitalsign/:id', db.getVitalSignByID);
+app.get('/api/condition/', db.getCondition);
 app.get('/api/condition/:id', db.getConditionByID);
-app.get('/api/bednumber', db.getBedNumber) 
-app.get('/api/getBedInfo/:id', db.getBedInfo)
+app.get('/api/bednumber', db.getBedNumber);
+app.get('/api/getBedInfo/:id', db.getBedInfo);
+app.get('/api/getLastestVS/:id', db.getLastestVS);
 
 // app.get('/api/products/', db.getAllProducts);
 // app.get('/api/products/:id', db.getProductByID);

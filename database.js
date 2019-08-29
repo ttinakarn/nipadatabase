@@ -46,7 +46,7 @@ function getVitalSignByID(req, res) {
             res.status(500)
                 .json({
                     status: 'failed',
-                    message: 'Failed to vitalsign vsid:' +
+                    message: 'Failed to retrieved vitalsign vsid:' +
                         req.params.id
                 });
         })
@@ -132,7 +132,7 @@ function getBedNumber(req, res) {
             res.status(500)
                 .json({
                     status: 'failed',
-                    message: 'Failed to retrieved vital signs'
+                    message: 'Failed to retrieved  bed number'
                 });
         })
 }
@@ -157,7 +157,33 @@ function getBedInfo(req, res) {
             res.status(500)
                 .json({
                     status: 'failed',
-                    message: 'Failed to vitalsign vsid:' +
+                    message: 'Failed to retrieved bed infomation of an:' +
+                        req.params.id
+                });
+        })
+}
+
+function getLastestVS(req, res) {
+    db.any(`select title, name, surname, max(remark) as remark, max(date) as date
+    from patient inner join treatmenthistory
+    on patient.hn = treatmenthistory.hn
+    inner join vitalsign
+    on treatmenthistory.an = vitalsign.an
+    where treatmenthistory.an = '` + req.params.id +`'
+    group by patient.hn, treatmenthistory.an, date`)
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'Retrieved bed infomation of an:' + req.params.id
+                });
+        })
+        .catch(function (error) {
+            res.status(500)
+                .json({
+                    status: 'failed',
+                    message: 'Failed to retrieved bed infomation of an:' +
                         req.params.id
                 });
         })
@@ -256,5 +282,6 @@ module.exports = {
     getConditionByID,
     insertVitalSigns,
     getBedNumber,
-    getBedInfo
+    getBedInfo,
+    getLastestVS
 }
