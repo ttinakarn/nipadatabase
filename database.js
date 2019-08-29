@@ -164,14 +164,14 @@ function getBedInfo(req, res) {
 }
 
 function getLastestVS(req, res) {
-    db.any(`select patient.title, patient.name, patient.surname, max(remark) as remark, max(date) as date, employee.title, employee.name, employee.surname
+    db.any(`select patient.title, patient.name, patient.surname, max(remark) as remark, max(date) as date, employee.title as emptitle, employee.name as empname, employee.surname as empsurname
     from patient inner join treatmenthistory
     on patient.hn = treatmenthistory.hn
     inner join vitalsign
     on treatmenthistory.an = vitalsign.an
 	inner join employee
 	on vitalsign.empid = employee.empid
-    where treatmenthistory.an = '` + req.params.id + `'
+    where treatmenthistory.an = '`+ req.params.id +`'
     group by patient.hn, treatmenthistory.an, date, employee.empid`)
         .then(function (data) {
             res.status(200)
