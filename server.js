@@ -30,6 +30,7 @@ app.get('/api/vitalsign/:id', db.getVitalSignByID)
 app.get('/api/condition/', db.getCondition)
 app.get('/api/condition/:id', db.getConditionByID);
 app.get('/api/bednumber', db.getBedNumber) 
+app.get('getBedInfo/:id', db.getBedInfo)
 
 // app.get('/api/products/', db.getAllProducts);
 // app.get('/api/products/:id', db.getProductByID);

@@ -137,6 +137,32 @@ function getBedNumber(req, res) {
         })
 }
 
+function getBedInfo(req, res) {
+    db.any(`select patient.hn, treatmenthistory.an, title, name, surname, dob, admitdate, max(remark)
+    from patient inner join treatmenthistory
+    on patient.hn = treatmenthistory.hn
+    inner join vitalsign
+    on treatmenthistory.an = vitalsign.an
+    where treatmenthistory.an = '` + req.params.id + `'
+    group by patient.hn, treatmenthistory.an`)
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'Retrieved bed infomation of an:' + req.params.id
+                });
+        })
+        .catch(function (error) {
+            res.status(500)
+                .json({
+                    status: 'failed',
+                    message: 'Failed to vitalsign vsid:' +
+                        req.params.id
+                });
+        })
+}
+
 // function updatevitalsign(req, res) {
 //         db.none('update vitalsign set an=${an}, temp=${temp}, pulse=${pulse}, resp=${resp}, pulse=${pulse}, sbp=${sbp}, pulse=${pulse}, dbp=${dbp}, o2sat=${o2sat}, eye=${eye}, verbal=${verbal}, motor=${motor}, urine=${urine}, painscore=${painscore}, fallrisk=${fallrisk}, remark=${remark}, eye=${eye}, date=${date}' +
 //         'where id=' + req.params.id, req.body)
@@ -229,5 +255,6 @@ module.exports = {
     getCondition,
     getConditionByID,
     insertVitalSigns,
-    getBedNumber
+    getBedNumber,
+    getBedInfo
 }
