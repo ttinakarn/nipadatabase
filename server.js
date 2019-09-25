@@ -12,9 +12,9 @@ extended: true
 var cors = require('cors');
 app.use(cors());
 
-io.on('connection', function(socket){
-    console.log('a user connected');
-})
+// io.on('connection', function(socket){
+//     console.log('a user connected');
+// });
 
 // index page
 app.get('/', function (req, res) {
