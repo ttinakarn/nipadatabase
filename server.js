@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var db = require('./database');
+var io = require('socket.io');
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -10,6 +11,10 @@ extended: true
 
 var cors = require('cors');
 app.use(cors());
+
+io.on('connection', function(socket){
+    console.log('a user connected');
+})
 
 // index page
 app.get('/', function (req, res) {
@@ -32,12 +37,6 @@ app.get('/api/condition/:id', db.getConditionByID);
 app.get('/api/bednumber', db.getBedNumber);
 app.get('/api/getBedInfo/:id', db.getBedInfo);
 app.get('/api/getLastestVS/:id', db.getLastestVS);
-
-// app.get('/api/products/', db.getAllProducts);
-// app.get('/api/products/:id', db.getProductByID);
-// app.post('/api/products/', db.insertProduct);
-// app.put('/api/products/:id', db.updateProduct);
-// app.delete('/api/products/:id', db.deleteProduct);
 
 var port = process.env.PORT || 8080;
 app.listen(port, function () {
