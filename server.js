@@ -1,7 +1,8 @@
 var express = require('express');
 var app = express();
+var http = require('http').createServer(app);
 var db = require('./database');
-var io = require('socket.io');
+var io = require('socket.io')(http);
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -9,12 +10,15 @@ app.use(bodyParser.urlencoded({
 extended: true
 }));
 
+var _socket = null;
+
 var cors = require('cors');
 app.use(cors());
 
-// io.on('connection', function(socket){
-//     console.log('a user connected');
-// });
+io.on('connection', function(socket){
+    _socket = socket;
+    console.log('a user connected');
+});
 
 // index page
 app.get('/', function (req, res) {
@@ -39,6 +43,6 @@ app.get('/api/getBedInfo/:id', db.getBedInfo);
 app.get('/api/getLastestVS/:id', db.getLastestVS);
 
 var port = process.env.PORT || 8080;
-app.listen(port, function () {
+http.listen(port, function () {
     console.log('App is running on http://localhost:' + port);
 });
