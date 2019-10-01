@@ -293,5 +293,6 @@ module.exports = {
     insertVitalSigns,
     getBedNumber,
     getBedInfo,
-    getLastestVS
+    getLastestVS,
+    
 }
