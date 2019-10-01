@@ -112,6 +112,13 @@ function insertVitalSigns(req, res) {
                 });
             console.log('ERROR:', error)
         })
+        
+        if (_socket) {
+
+            _socket.emit('dataUpdated', "Updated data at " + new Date().toUTCString());
+    
+            res.send(new Date().toUTCString())
+        }
 }
 
 function getBedNumber(req, res) {
@@ -294,5 +301,5 @@ module.exports = {
     getBedNumber,
     getBedInfo,
     getLastestVS,
-    
+
 }
