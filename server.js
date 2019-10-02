@@ -50,7 +50,14 @@ var output = {
 app.get('/api/json', function (req, res) {
     res.status(500).json(output);
 });
-app.post('/api/vitalsign/', db.insertVitalSigns);
+app.post('/api/vitalsign/', db.insertVitalSigns, (req, res) => {
+    if (_socket) {
+
+        _socket.emit('dataUpdated', "Updated data at " + new Date().toUTCString());
+
+        res.send(new Date().toUTCString())
+    }
+});
 app.get('/api/vitalsign/', db.getVitalSigns);
 app.get('/api/vitalsign/:id', db.getVitalSignByID);
 app.get('/api/condition/', db.getCondition);
