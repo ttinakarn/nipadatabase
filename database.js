@@ -98,12 +98,15 @@ function insertVitalSigns(req, res, next) {
         'values(${an}, ${temp}, ${pulse}, ${resp}, ${sbp}, ${dbp}, ${o2sat}, ${eye}, ${verbal}, ${motor}, ${urine}, ${painscore}, ${fallrisk}, ${empid}, ${remark}, ${date})',
         req.body)
         .then(function (data) {
+            const data =  {bednumber : "1" , temp : true}
+            req.data = data;
             res.status(200)
                 .json({
                     status: 'success',
                     message: 'Inserted one vitalsign'
                 });
             next();
+
         })
         .catch(function (error) {
             res.status(401)

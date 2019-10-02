@@ -27,21 +27,14 @@ app.get('/', function (req, res) {
 
 app.get('/api/update', function (req, res) {
 
-    if (_socket) {
+    
+    // if (_socket) {
 
-        _socket.emit('dataUpdated', "Updated data at " + new Date().toUTCString());
+    //     _socket.emit('dataUpdated', "Updated data at " +  );
 
-        res.send(new Date().toUTCString())
-    }
-
+    //     res.send(new Date().toUTCString())
+    // }
 });
-
-app.get('/api/host', function (req, res){
-
-
-
-});
-
 var output = {
     status: 'success',
     message: 'REST API is working'
@@ -53,10 +46,10 @@ app.get('/api/json', function (req, res) {
 app.post('/api/vitalsign/', db.insertVitalSigns, (req, res) => {
     if (_socket) {
 
-        _socket.emit('dataUpdated', "Updated data at " + new Date().toUTCString());
+        _socket.emit('dataUpdated',req.data);
 
         console.log('dataUpdated');
-        
+
     }
 });
 app.get('/api/vitalsign/', db.getVitalSigns);
