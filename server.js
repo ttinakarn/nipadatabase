@@ -45,6 +45,9 @@ app.get('/api/json', function (req, res) {
 });
 app.post('/api/vitalsign/', db.insertVitalSigns, (req, res) => {
    console.log('dataUpdated') ;
+   console.log(_socket);
+   console.log(req.data);
+   
    
    if (_socket) {
 
