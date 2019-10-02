@@ -118,7 +118,8 @@ function getBedNumber(req, res) {
     db.any(`select vitalsign.an, bednumber, max(date)
     from vitalsign inner join treatmenthistory
     on vitalsign.an = treatmenthistory.an
-    group by bednumber, vitalsign.an`)
+    group by bednumber, vitalsign.an
+    order by bednumber`)
         .then(function (data) {
             res.status(200)
                 .json({
