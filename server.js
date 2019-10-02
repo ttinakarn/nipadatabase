@@ -36,6 +36,12 @@ app.get('/api/update', function (req, res) {
 
 });
 
+app.get('/api/host', function (req, res){
+
+
+
+});
+
 var output = {
     status: 'success',
     message: 'REST API is working'
@@ -44,14 +50,7 @@ var output = {
 app.get('/api/json', function (req, res) {
     res.status(500).json(output);
 });
-app.post('/api/vitalsign/', db.insertVitalSigns, function(req, res){
-    if (_socket) {
-
-        _socket.emit('dataUpdated', "Updated data at " + new Date().toUTCString());
-
-        res.send(new Date().toUTCString())
-    }
-});
+app.post('/api/vitalsign/', db.insertVitalSigns);
 app.get('/api/vitalsign/', db.getVitalSigns);
 app.get('/api/vitalsign/:id', db.getVitalSignByID);
 app.get('/api/condition/', db.getCondition);

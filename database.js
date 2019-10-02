@@ -111,14 +111,7 @@ function insertVitalSigns(req, res) {
                     message: error.message
                 });
             console.log('ERROR:', error)
-        })
-        
-        if (_socket) {
-
-            _socket.emit('dataUpdated', "Updated data at " + new Date().toUTCString());
-    
-            res.send(new Date().toUTCString())
-        }
+        });
 }
 
 function getBedNumber(req, res) {
