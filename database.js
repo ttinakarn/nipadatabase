@@ -98,7 +98,11 @@ function insertVitalSigns(req, res, next) {
         'values(${an}, ${temp}, ${pulse}, ${resp}, ${sbp}, ${dbp}, ${o2sat}, ${eye}, ${verbal}, ${motor}, ${urine}, ${painscore}, ${fallrisk}, ${empid}, ${remark}, ${date})',
         req.body)
         .then(function (data) {
-            const updatedData =  {bednumber : "1" , temp : true}
+            const updatedData = {
+                bednumber: 1, status: [
+                    { temp: true },
+                    { pulse: false }]
+            }
             req.data = updatedData;
             res.status(200)
                 .json({
@@ -175,91 +179,91 @@ function getLastestVS(req, res) {
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id +`'
+                and vitalsign.an = '`+ req.params.id + `'
                 and temp is not null
                 order by date desc limit 1) as temp,
                 (select pulse 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id +`'
+                and vitalsign.an = '`+ req.params.id + `'
                 and pulse is not null
                 order by date desc limit 1) as pulse,
                 (select resp 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id +`'
+                and vitalsign.an = '`+ req.params.id + `'
                 and resp is not null
                 order by date desc limit 1) as resp,
                 (select sbp 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id +`'
+                and vitalsign.an = '`+ req.params.id + `'
                 and sbp is not null
                 order by date desc limit 1) as sbp,
                 (select dbp 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber
-                and vitalsign.an = '`+ req.params.id +`'
+                and vitalsign.an = '`+ req.params.id + `'
                 and dbp is not null
                 order by date desc limit 1) as dbp,
                 (select o2sat 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id +`'
+                and vitalsign.an = '`+ req.params.id + `'
                 and o2sat is not null
                 order by date desc limit 1) as o2sat,
                 (select eye 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id +`'
+                and vitalsign.an = '`+ req.params.id + `'
                 and eye is not null
                 order by date desc limit 1) as eye,
                 (select verbal 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id +`'
+                and vitalsign.an = '`+ req.params.id + `'
                 and verbal is not null
                 order by date desc limit 1) as verbal,
                 (select motor 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id +`'
+                and vitalsign.an = '`+ req.params.id + `'
                 and motor is not null
                 order by date desc limit 1) as motor,
                 (select urine 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id +`'
+                and vitalsign.an = '`+ req.params.id + `'
                 and urine is not null
                 order by date desc limit 1) as urine,
                 (select painscore 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id +`'
+                and vitalsign.an = '`+ req.params.id + `'
                 and painscore is not null
                 order by date desc limit 1) as painscore,
                 (select fallrisk 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id +`'
+                and vitalsign.an = '`+ req.params.id + `'
                 and fallrisk is not null
                 order by date desc limit 1) as fallrisk,
                 (select remark 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id +`'
+                and vitalsign.an = '`+ req.params.id + `'
                 and remark is not null
                 order by date desc limit 1) as remark
             from patient inner join treatmenthistory
@@ -268,7 +272,7 @@ function getLastestVS(req, res) {
             on treatmenthistory.an = vitalsign.an
             inner join employee
             on vitalsign.empid = employee.empid
-            where treatmenthistory.an = '`+ req.params.id +`'
+            where treatmenthistory.an = '`+ req.params.id + `'
             group by bednumber, patient.title, patient.name, patient.surname, 
             employee.title, employee.name, employee.surname`)
         .then(function (data) {
