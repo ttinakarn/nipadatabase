@@ -44,11 +44,13 @@ app.get('/api/json', function (req, res) {
     res.status(500).json(output);
 });
 app.post('/api/vitalsign/', db.insertVitalSigns, (req, res) => {
-    if (_socket) {
+   console.log('dataUpdated') ;
+   
+   if (_socket) {
 
         _socket.emit('dataUpdated',req.data);
 
-        console.log('dataUpdated');
+       
 
     }
 });
