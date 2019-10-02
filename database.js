@@ -92,7 +92,7 @@ function getConditionByID(req, res) {
         })
 }
 
-function insertVitalSigns(req, res) {
+function insertVitalSigns(req, res, next) {
     console.log(req.body)
     db.none('insert into vitalsign(an, temp, pulse, resp, sbp, dbp, o2sat, eye, verbal, motor, urine, painscore, fallrisk, empid, remark ,date) ' +
         'values(${an}, ${temp}, ${pulse}, ${resp}, ${sbp}, ${dbp}, ${o2sat}, ${eye}, ${verbal}, ${motor}, ${urine}, ${painscore}, ${fallrisk}, ${empid}, ${remark}, ${date})',
@@ -103,6 +103,7 @@ function insertVitalSigns(req, res) {
                     status: 'success',
                     message: 'Inserted one vitalsign'
                 });
+            next();
         })
         .catch(function (error) {
             res.status(401)

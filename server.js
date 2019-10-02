@@ -55,7 +55,8 @@ app.post('/api/vitalsign/', db.insertVitalSigns, (req, res) => {
 
         _socket.emit('dataUpdated', "Updated data at " + new Date().toUTCString());
 
-        res.send(new Date().toUTCString())
+        console.log('dataUpdated');
+        
     }
 });
 app.get('/api/vitalsign/', db.getVitalSigns);
