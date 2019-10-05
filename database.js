@@ -105,7 +105,7 @@ function insertVitalSigns(req, res, next) {
                     { temp: true },
                     { pulse: false }]
             }
-            console.log(req.body.vs[0]);
+            console.log(req.body[vs[0]]);
             
             
             req.data = updatedData;
