@@ -100,7 +100,7 @@ function insertVitalSigns(req, res, next) {
         .then(function (data) {
             var vs = ['temp', 'pulse', 'resp', 'sbp', 'dbp', 'o2sat', 'eye', 'verbal', 'motor', 'urine', 'painscore', 'fallrisk', 'remark']
             const updatedData = {
-                bednumber: 1, status: [
+                bednumber: req.body.bednumber, status: [
                     { temp: true },
                     { pulse: true },
                     { resp: true },
@@ -116,10 +116,15 @@ function insertVitalSigns(req, res, next) {
                     { remark: true },
                 ]
             }
-            console.log(updatedData.status[0].temp);
+            console.log(updatedData.status[0][vs[0]]);
 
             console.log('req.body[vs[0]]', req.body[vs[0]]);
 
+            for(var i = 0; i < vs.length; i++){
+                if(req.body[vs[i]] != null){
+
+                }
+            }
 
             req.data = updatedData;
             res.status(200)
