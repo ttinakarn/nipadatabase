@@ -123,11 +123,11 @@ function insertVitalSigns(req, res, next) {
             for(var i = 0; i < vs.length-1; i++){
                 console.log('req.body[vs[i]]',req.body[vs[i]]);
                 console.log('updatedData.status[0][vs[i]]',updatedData.status[0][vs[i]]);
-                
+                console.log('updatedData.status[0][vs[i]]',updatedData.status[11][vs[i]]);
                 if(req.body[vs[i]] != null ){
                     updatedData.status[i][vs[i]] = true
                     if(req.body.fallrisk == 0 && i == 11){
-                        updatedData.status.fallrisk = false
+                        updatedData.status[11].fallrisk = false
                     }
                 }
             }
