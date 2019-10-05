@@ -112,8 +112,8 @@ function insertVitalSigns(req, res, next) {
                     { motor: false },
                     { urine: false },
                     { painscore: false },
-                    { remark: false },
                     { fallrisk: false },
+                    { remark: false },
                 ]
             }
             console.log(updatedData.status[0][vs[0]]);
@@ -123,6 +123,7 @@ function insertVitalSigns(req, res, next) {
             for(var i = 0; i < vs.length; i++){
                 console.log('req.body[vs[i]]',req.body[vs[i]]);
                 console.log('updatedData.status[0][vs[i]]',updatedData.status[0][vs[i]]);
+                
                 if(req.body[vs[i]] != null){
                     updatedData.status[i][vs[i]] = true
                 }
