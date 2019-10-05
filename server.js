@@ -25,16 +25,16 @@ app.get('/', function (req, res) {
     res.send('Express is running');
 });
 
-app.get('/api/update', function (req, res) {
+// app.get('/api/update', function (req, res) {
 
     
-    // if (_socket) {
+//     // if (_socket) {
 
-    //     _socket.emit('dataUpdated', "Updated data at " +  );
+//     //     _socket.emit('dataUpdated', "Updated data at " +  );
 
-    //     res.send(new Date().toUTCString())
-    // }
-});
+//     //     res.send(new Date().toUTCString())
+//     // }
+// });
 var output = {
     status: 'success',
     message: 'REST API is working'

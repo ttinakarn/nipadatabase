@@ -103,6 +103,8 @@ function insertVitalSigns(req, res, next) {
                     { temp: true },
                     { pulse: false }]
             }
+            console.log("data", data);
+            
             req.data = updatedData;
             res.status(200)
                 .json({
