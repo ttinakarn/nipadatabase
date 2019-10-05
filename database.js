@@ -104,7 +104,7 @@ function insertVitalSigns(req, res, next) {
                     { temp: false },
                     { pulse: false },
                     { resp: false},
-                    { sbp: false },
+                    { sbp: true },
                     { dbp: false }, 
                     { o2sat: false },
                     { eye: false },
