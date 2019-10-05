@@ -172,7 +172,7 @@ function getBedInfo(req, res) {
     // on treatmenthistory.an = vitalsign.an
     // where treatmenthistory.an = '` + req.params.id + `'
     // group by patient.hn, treatmenthistory.an`)
-    db.any(`select patient.hn, treatmenthistory.an, title, name, surname, dob, admitdate, last_value(remark) over (order by remark)
+    db.any(`select patient.hn, treatmenthistory.an, title, name, surname, dob, admitdate, last_value(remark) over (order by remark) as max
     from patient inner join treatmenthistory
     on patient.hn = treatmenthistory.hn
     inner join vitalsign
