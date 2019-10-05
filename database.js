@@ -93,18 +93,31 @@ function getConditionByID(req, res) {
 }
 
 function insertVitalSigns(req, res, next) {
-    console.log(req.body.temp)
+    console.log(req.body)
     db.none('insert into vitalsign(an, temp, pulse, resp, sbp, dbp, o2sat, eye, verbal, motor, urine, painscore, fallrisk, empid, remark ,date) ' +
         'values(${an}, ${temp}, ${pulse}, ${resp}, ${sbp}, ${dbp}, ${o2sat}, ${eye}, ${verbal}, ${motor}, ${urine}, ${painscore}, ${fallrisk}, ${empid}, ${remark}, ${date})',
         req.body)
         .then(function (data) {
             var vs = ['temp', 'pulse', 'resp', 'sbp', 'dbp', 'o2sat', 'eye', 'verbal', 'motor', 'urine', 'painscore', 'fallrisk', 'remark' ]
             const updatedData = {
-                
                 bednumber: 1, status: [
-                    { temp: true },
-                    { pulse: false }]
+                    { temp: false },
+                    { pulse: false },
+                    { resp: false},
+                    { sbp: false },
+                    { dbp: false }, 
+                    { o2sat: false },
+                    { eye: false },
+                    { verbal: false}, 
+                    { motor: false },
+                    { urine: false },
+                    { painscore: false},
+                    { fallrisk: false },
+                    { remark: false },
+                ]
             }
+            console.log('updatedData', updatedData.status.temp);
+            
             console.log('req.body[vs[0]]',req.body[vs[0]]);
             
             
