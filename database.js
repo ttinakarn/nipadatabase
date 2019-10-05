@@ -93,7 +93,7 @@ function getConditionByID(req, res) {
 }
 
 function insertVitalSigns(req, res, next) {
-    console.log(req.body)
+    console.log(req.body.temp)
     db.none('insert into vitalsign(an, temp, pulse, resp, sbp, dbp, o2sat, eye, verbal, motor, urine, painscore, fallrisk, empid, remark ,date) ' +
         'values(${an}, ${temp}, ${pulse}, ${resp}, ${sbp}, ${dbp}, ${o2sat}, ${eye}, ${verbal}, ${motor}, ${urine}, ${painscore}, ${fallrisk}, ${empid}, ${remark}, ${date})',
         req.body)
