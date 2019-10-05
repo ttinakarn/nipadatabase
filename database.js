@@ -125,7 +125,7 @@ function insertVitalSigns(req, res, next) {
                 console.log('updatedData.status[0][vs[i]]',updatedData.status[0][vs[i]]);
                 
                 if(req.body[vs[i]] != null){
-                    updatedData.status[0][vs[i]] = true
+                    updatedData.status[i][vs[i]] = true
                 }
             }
 
