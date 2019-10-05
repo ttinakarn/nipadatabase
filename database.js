@@ -101,7 +101,7 @@ function insertVitalSigns(req, res, next) {
             var vs = ['temp', 'pulse', 'resp', 'sbp', 'dbp', 'o2sat', 'eye', 'verbal', 'motor', 'urine', 'painscore', 'fallrisk', 'remark' ]
             const updatedData = {
                 bednumber: 1, status: [
-                    { temp: false },
+                    { temp: true },
                     { pulse: false },
                     { resp: false},
                     { sbp: true },
