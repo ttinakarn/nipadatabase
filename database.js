@@ -116,7 +116,7 @@ function insertVitalSigns(req, res, next) {
                     { remark: false },
                 ]
             }
-            console.log('updatedData', updatedData[status[0]]);
+            console.log('updatedData', updatedData.status.temp);
             
             console.log('req.body[vs[0]]',req.body[vs[0]]);
             
