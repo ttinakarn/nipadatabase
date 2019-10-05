@@ -112,20 +112,22 @@ function insertVitalSigns(req, res, next) {
                     { motor: false },
                     { urine: false },
                     { painscore: false },
-                    { fallrisk: false },
                     { remark: false },
+                    { fallrisk: false },
                 ]
             }
             console.log(updatedData.status[0][vs[0]]);
 
             console.log('req.body[vs[0]]', req.body[vs[0]]);
 
-            for(var i = 0; i < vs.length; i++){
+            for(var i = 0; i < vs.length-1; i++){
                 console.log('req.body[vs[i]]',req.body[vs[i]]);
                 console.log('updatedData.status[0][vs[i]]',updatedData.status[0][vs[i]]);
-                
                 if(req.body[vs[i]] != null){
                     updatedData.status[i][vs[i]] = true
+                }
+                if(req.body.fallrisk != 0){
+                    updatedData.status.fallrisk = true
                 }
             }
 
