@@ -98,29 +98,29 @@ function insertVitalSigns(req, res, next) {
         'values(${an}, ${temp}, ${pulse}, ${resp}, ${sbp}, ${dbp}, ${o2sat}, ${eye}, ${verbal}, ${motor}, ${urine}, ${painscore}, ${fallrisk}, ${empid}, ${remark}, ${date})',
         req.body)
         .then(function (data) {
-            var vs = ['temp', 'pulse', 'resp', 'sbp', 'dbp', 'o2sat', 'eye', 'verbal', 'motor', 'urine', 'painscore', 'fallrisk', 'remark' ]
+            var vs = ['temp', 'pulse', 'resp', 'sbp', 'dbp', 'o2sat', 'eye', 'verbal', 'motor', 'urine', 'painscore', 'fallrisk', 'remark']
             const updatedData = {
                 bednumber: 1, status: [
                     { temp: true },
                     { pulse: true },
-                    { resp: true},
+                    { resp: true },
                     { sbp: false },
-                    { dbp: true }, 
+                    { dbp: true },
                     { o2sat: true },
                     { eye: true },
-                    { verbal: true}, 
+                    { verbal: true },
                     { motor: true },
                     { urine: true },
-                    { painscore: true},
+                    { painscore: true },
                     { fallrisk: true },
                     { remark: true },
                 ]
             }
-            console.log('updatedData', updatedData.status[0]);
-            
-            console.log('req.body[vs[0]]',req.body[vs[0]]);
-            
-            
+            console.log(updatedData.status[0]);
+
+            console.log('req.body[vs[0]]', req.body[vs[0]]);
+
+
             req.data = updatedData;
             res.status(200)
                 .json({
