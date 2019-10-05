@@ -101,19 +101,19 @@ function insertVitalSigns(req, res, next) {
             var vs = ['temp', 'pulse', 'resp', 'sbp', 'dbp', 'o2sat', 'eye', 'verbal', 'motor', 'urine', 'painscore', 'fallrisk', 'remark']
             const updatedData = {
                 bednumber: req.body.bednumber, status: [
-                    { temp: true },
-                    { pulse: true },
-                    { resp: true },
+                    { temp: false },
+                    { pulse: false },
+                    { resp: false },
                     { sbp: false },
-                    { dbp: true },
-                    { o2sat: true },
-                    { eye: true },
-                    { verbal: true },
-                    { motor: true },
-                    { urine: true },
-                    { painscore: true },
-                    { fallrisk: true },
-                    { remark: true },
+                    { dbp: false },
+                    { o2sat: false },
+                    { eye: false },
+                    { verbal: false },
+                    { motor: false },
+                    { urine: false },
+                    { painscore: false },
+                    { fallrisk: false },
+                    { remark: false },
                 ]
             }
             console.log(updatedData.status[0][vs[0]]);
@@ -122,7 +122,7 @@ function insertVitalSigns(req, res, next) {
 
             for(var i = 0; i < vs.length; i++){
                 if(req.body[vs[i]] != null){
-
+                    updatedData.status[0][vs[i]] = true
                 }
             }
 
