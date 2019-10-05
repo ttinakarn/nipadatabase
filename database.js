@@ -127,9 +127,9 @@ function insertVitalSigns(req, res, next) {
                 if(req.body[vs[i]] != null){
                     updatedData.status[i][vs[i]] = true
                 }
-                if(req.body.fallrisk = 0){
-                    updatedData.status.fallrisk = false
-                }
+            }
+            if(req.body.fallrisk = 0){
+                updatedData.status.fallrisk = false
             }
 
             req.data = updatedData;
