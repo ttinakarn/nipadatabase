@@ -210,6 +210,31 @@ function getBedInfo(req, res) {
         })
 }
 
+function getpatientInformation(req, res){
+
+db.any(`select conid,hn,title,patient.name,surname 
+from patient,condition
+where patient.name = condition.name`)
+
+.then(function (data) {
+    res.status(200)
+        .json({
+            status: 'success',
+            data: data,
+            message: 'success to getpatient' + req.params.an
+        });
+})
+.catch(function (error) {
+    console.log(error);
+    res.status(500)
+        .json({
+            status: 'failed',
+            message: 'Failed to getpatient' + req.params.an
+        });
+})
+
+}
+
 function getLastestVS(req, res) {
     db.any(`select bednumber,patient.title, patient.name, patient.surname, max(date), 
                 employee.title as emptitle, employee.name as empname, 
@@ -341,5 +366,6 @@ module.exports = {
     getBedNumber,
     getBedInfo,
     getLastestVS,
+    getpatientInformation
 
 }
