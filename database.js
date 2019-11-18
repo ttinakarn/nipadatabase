@@ -27,13 +27,16 @@ function getVitalSigns(req, res) {
 }
 
 function getVitalSignByID(req, res) {
-    db.any(`select vitalsign.an, bednumber, temp, pulse, resp, sbp, dbp, o2sat, eye, verbal, motor, urine, painscore, fallrisk, remark, name, date
-    from treatmenthistory inner join vitalsign
+    db.any(`select patient.title, patient.name as patientname, patient.surname as patientsurname, vitalsign.an, patient.hn, bednumber, temp, pulse, resp, sbp, dbp, o2sat, eye, verbal, motor, urine, painscore, fallrisk, remark, employee.name as name, date
+    from patient inner join treatmenthistory 
+	on patient.hn = treatmenthistory.hn
+	inner join vitalsign
     on vitalsign.an = treatmenthistory.an
-    inner join employee 
+    inner join employee
     on vitalsign.empid = employee.empid
     where vitalsign.an = '` + req.params.id + `'
-    order by bednumber`)
+    order by date`
+    )
         .then(function (data) {
             res.status(200)
                 .json({
