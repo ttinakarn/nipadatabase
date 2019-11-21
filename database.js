@@ -215,7 +215,7 @@ function getBedInfo(req, res) {
 
 function getpatient(req, res){
 
-    db.any(`select elect bednumber,an,patient.hn,title,name,surname,dischargedate
+    db.any(`select bednumber,an,patient.hn,title,name,surname,dischargedate
     from treatmenthistory,patient
     where dischargedate is null`)
     
