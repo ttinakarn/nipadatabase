@@ -213,6 +213,32 @@ function getBedInfo(req, res) {
         })
 }
 
+function getpatient(req, res){
+
+    db.any(`select elect bednumber,an,patient.hn,title,name,surname,dischargedate
+    from treatmenthistory,patient
+    where dischargedate is null`)
+    
+    .then(function (data) {
+        res.status(200)
+            .json({
+                status: 'success',
+                data: data,
+                message: 'success to getpatient' 
+            });
+    })
+    .catch(function (error) {
+        console.log(error);
+        res.status(500)
+            .json({
+                status: 'failed',
+                message: 'Failed to getpatient' 
+            });
+    })
+    
+    }
+
+
 function getpatientInformation(req, res){
 
 db.any(`select bednumber,an,patient.hn,title,name,surname,dob,admitdate,dischargedate
@@ -395,6 +421,7 @@ module.exports = {
     getBedInfo,
     getLastestVS,
     getpatientInformation,
-    getscore
+    getscore,
+    getpatient
 
 }
