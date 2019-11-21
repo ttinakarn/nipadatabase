@@ -65,6 +65,7 @@ app.get('/api/bednumber', db.getBedNumber);
 app.get('/api/getBedInfo/:id', db.getBedInfo);
 app.get('/api/getLastestVS/:id', db.getLastestVS);
 app.get('/api/patientInformation/:an', db.getpatientInformation);
+app.get('/api/getscore/', db.getScore);
 
 var port = process.env.PORT || 8080;
 http.listen(port, function () {

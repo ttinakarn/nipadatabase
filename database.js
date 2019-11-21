@@ -215,9 +215,8 @@ function getBedInfo(req, res) {
 
 function getpatientInformation(req, res){
 
-db.any(`select conid,hn,title,patient.name,surname 
-from patient,condition
-where patient.name = condition.name`)
+db.any(`select bednumber,an,patient.hn,title,name,surname,dob,admitdate,dischargedate
+from treatmenthistory,patient`)
 
 .then(function (data) {
     res.status(200)
@@ -237,6 +236,7 @@ where patient.name = condition.name`)
 })
 
 }
+
 
 function getLastestVS(req, res) {
     db.any(`select bednumber,patient.title, patient.name, patient.surname, max(date), 
