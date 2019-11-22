@@ -213,81 +213,81 @@ function getBedInfo(req, res) {
         })
 }
 
-function getpatient(req, res){
+// function getpatient(req, res){
 
-    db.any(`select bednumber,an,patient.hn,title,name,surname,dischargedate
-    from treatmenthistory,patient
-    where dischargedate is null`)
+//     db.any(`select bednumber,an,patient.hn,title,name,surname,dischargedate
+//     from treatmenthistory,patient
+//     where dischargedate is null`)
     
-    .then(function (data) {
-        res.status(200)
-            .json({
-                status: 'success',
-                data: data,
-                message: 'success to getpatient' 
-            });
-    })
-    .catch(function (error) {
-        console.log(error);
-        res.status(500)
-            .json({
-                status: 'failed',
-                message: 'Failed to getpatient' 
-            });
-    })
+//     .then(function (data) {
+//         res.status(200)
+//             .json({
+//                 status: 'success',
+//                 data: data,
+//                 message: 'success to getpatient' 
+//             });
+//     })
+//     .catch(function (error) {
+//         console.log(error);
+//         res.status(500)
+//             .json({
+//                 status: 'failed',
+//                 message: 'Failed to getpatient' 
+//             });
+//     })
     
-    }
+//     }
 
 
-function getpatientInformation(req, res){
+// function getpatientInformation(req, res){
 
-db.any(`select bednumber,an,patient.hn,title,name,surname,dob,admitdate,dischargedate
-from treatmenthistory,patient`)
+// db.any(`select bednumber,an,patient.hn,title,name,surname,dob,admitdate,dischargedate
+// from treatmenthistory,patient`)
 
-.then(function (data) {
-    res.status(200)
-        .json({
-            status: 'success',
-            data: data,
-            message: 'success to getpatient' + req.params.an
-        });
-})
-.catch(function (error) {
-    console.log(error);
-    res.status(500)
-        .json({
-            status: 'failed',
-            message: 'Failed to getpatient' + req.params.an
-        });
-})
+// .then(function (data) {
+//     res.status(200)
+//         .json({
+//             status: 'success',
+//             data: data,
+//             message: 'success to getpatient' + req.params.an
+//         });
+// })
+// .catch(function (error) {
+//     console.log(error);
+//     res.status(500)
+//         .json({
+//             status: 'failed',
+//             message: 'Failed to getpatient' + req.params.an
+//         });
+// })
 
-}
+// }
 
-function getscore(req, res){
+// function getscore(req, res){
 
-    db.any(`select * from score`)
+//     db.any(`select * from score`)
     
-    .then(function (data) {
-        res.status(200)
-            .json({
-                status: 'success',
-                data: data,
-                message: 'success to getscore' 
-            });
-    })
-    .catch(function (error) {
-        console.log(error);
-        res.status(500)
-            .json({
-                status: 'failed',
-                message: 'Failed to getscore' 
-            });
-    })
+//     .then(function (data) {
+//         res.status(200)
+//             .json({
+//                 status: 'success',
+//                 data: data,
+//                 message: 'success to getscore' 
+//             });
+//     })
+//     .catch(function (error) {
+//         console.log(error);
+//         res.status(500)
+//             .json({
+//                 status: 'failed',
+//                 message: 'Failed to getscore' 
+//             });
+//     })
 
 
 
 
-}
+// }
 
 function getLastestVS(req, res) {
     db.any(`select bednumber,patient.title, patient.name, patient.surname, max(date), 
@@ -420,8 +420,8 @@ module.exports = {
     getBedNumber,
     getBedInfo,
     getLastestVS,
-    getpatientInformation,
-    getscore,
-    getpatient
+    // getpatientInformation,
+    // getscore,
+    // getpatient
 
 }
