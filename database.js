@@ -123,18 +123,18 @@ function insertVitalSigns(req, res, next) {
 
             console.log('req.body[vs[0]]', req.body[vs[0]]);
 
-            for(var i = 0; i < vs.length-1; i++){
-                console.log('req.body[vs[i]]',req.body[vs[i]]);
-                console.log('updatedData.status[0][vs[i]]',updatedData.status[0][vs[i]]);
-                console.log('updatedData.status[0][vs[i]]',updatedData.status[11][vs[i]]);
-                if(req.body[vs[i]] != null ){
+            for (var i = 0; i < vs.length - 1; i++) {
+                console.log('req.body[vs[i]]', req.body[vs[i]]);
+                console.log('updatedData.status[0][vs[i]]', updatedData.status[0][vs[i]]);
+                console.log('updatedData.status[0][vs[i]]', updatedData.status[11][vs[i]]);
+                if (req.body[vs[i]] != null) {
                     updatedData.status[i][vs[i]] = true
-                    if(req.body.fallrisk == 0 && i == 11){
+                    if (req.body.fallrisk == 0 && i == 11) {
                         updatedData.status[11].fallrisk = false
                     }
                 }
             }
-            
+
 
             req.data = updatedData;
             res.status(200)
@@ -218,7 +218,7 @@ function getBedInfo(req, res) {
 //     db.any(`select bednumber,an,patient.hn,title,name,surname,dischargedate
 //     from treatmenthistory,patient
 //     where dischargedate is null`)
-    
+
 //     .then(function (data) {
 //         res.status(200)
 //             .json({
@@ -235,7 +235,7 @@ function getBedInfo(req, res) {
 //                 message: 'Failed to getpatient' 
 //             });
 //     })
-    
+
 //     }
 
 
@@ -263,31 +263,27 @@ function getBedInfo(req, res) {
 
 // }
 
-// function getscore(req, res){
+function getscore(req, res) {
 
-//     db.any(`select * from score`)
-    
-//     .then(function (data) {
-//         res.status(200)
-//             .json({
-//                 status: 'success',
-//                 data: data,
-//                 message: 'success to getscore' 
-//             });
-//     })
-//     .catch(function (error) {
-//         console.log(error);
-//         res.status(500)
-//             .json({
-//                 status: 'failed',
-//                 message: 'Failed to getscore' 
-//             });
-//     })
+    db.any(`select * from score`)
 
-
-
-
-// }
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'success to getscore'
+                });
+        })
+        .catch(function (error) {
+            console.log(error);
+            res.status(500)
+                .json({
+                    status: 'failed',
+                    message: 'Failed to getscore'
+                });
+        })
+}
 
 function getLastestVS(req, res) {
     db.any(`select bednumber,patient.title, patient.name, patient.surname, max(date), 
@@ -421,7 +417,7 @@ module.exports = {
     getBedInfo,
     getLastestVS,
     // getpatientInformation,
-    // getscore,
+    getscore,
     // getpatient
 
 }
