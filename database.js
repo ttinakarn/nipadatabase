@@ -218,7 +218,8 @@ function getpatient(req, res){
     db.any(`select bednumber,an,patient.hn,title,name,surname,dischargedate
     from treatmenthistory,patient
     where treatmenthistory.hn = patient.hn
-	and dischargedate is null`)
+    and dischargedate is null 
+    order by bednumber`)
 
     .then(function (data) {
         res.status(200)
