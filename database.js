@@ -244,7 +244,9 @@ function getpatient(req, res){
 function getpatientInformation(req, res){
 
 db.any(`select bednumber,an,patient.hn,title,name,surname,dob,admitdate,dischargedate
-from treatmenthistory,patient`)
+from treatmenthistory inner join patient
+on treatmenthistory.hn = patient.hn
+where an = '` + req.params.an + `'`)
 
 .then(function (data) {
     res.status(200)
