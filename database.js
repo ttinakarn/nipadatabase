@@ -292,7 +292,7 @@ function getscore(req, res) {
 function getLastestVS(req, res) {
     db.any(`select bednumber,patient.title, patient.name, patient.surname, max(date), 
                 employee.title as emptitle, employee.name as empname, 
-                employee.surname as empsurname, sos,
+                employee.surname as empsurname,
                 (select temp 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
