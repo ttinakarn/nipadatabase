@@ -155,11 +155,9 @@ function insertVitalSigns(req, res, next) {
 }
 
 function getBedNumber(req, res) {
-    db.any(`select vitalsign.an, bednumber, max(date)
-    from vitalsign inner join treatmenthistory
-    on vitalsign.an = treatmenthistory.an
-    where treatmenthistory.dischargedate is null
-    group by bednumber, vitalsign.an
+    db.any(`select treatmenthistory.an, bednumber
+    from treatmenthistory
+	where treatmenthistory.dischargedate is null
     order by bednumber`)
         .then(function (data) {
             res.status(200)
