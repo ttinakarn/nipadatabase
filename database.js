@@ -155,9 +155,11 @@ function insertVitalSigns(req, res, next) {
 }
 
 function getBedNumber(req, res) {
-    db.any(`select treatmenthistory.an, bednumber
-    from treatmenthistory
-	where treatmenthistory.dischargedate is null
+    db.any(`select vitalsign.an, bednumber, max(date)
+    from vitalsign inner join treatmenthistory
+    on vitalsign.an = treatmenthistory.an
+    where treatmenthistory.dischargedate is null
+    group by bednumber, vitalsign.an
     order by bednumber`)
         .then(function (data) {
             res.status(200)
@@ -178,7 +180,7 @@ function getBedNumber(req, res) {
 }
 
 function getBedInfo(req, res) {
-    db.any(`select patient.hn, treatmenthistory.an, title, name, surname, dob, admitdate
+    db.any(`select patient.hn, treatmenthistory.an, title, name, surname, dob, admitdate, last_value(remark) over (order by remark) as max
     from patient inner join treatmenthistory
     on patient.hn = treatmenthistory.hn
     inner join vitalsign
@@ -375,33 +377,6 @@ function insertpatient(req, res) {
         });
 }
 
-function updatepatientInformation(req, res) {
-    db.none('update patientInformation set bednumber=${bednumber} ,an= ${an},hn= ${hn}, title= ${title}, name= ${name}, surname= ${surname}, dob= ${dob}, admitdate= ${admitdate}, dischargedate= ${dischargedate} ' + 'where id=' + req.params.id, req.body)
-        .then(function (data) {
-            res.status(200)
-                .json({
-                    status: 'success',
-                    message: 'Update information'
-                });
-        })
-        .catch(function (error) {
-            console.log('ERROR:', error)
-        })
-}
-function deletepatientInformation(req, res) {
-    db.none('delete from patientInformation' + 'where an=' + req.params.an)
-
-        .then(function (data) {
-            res.status(200)
-                .json({
-                    status: 'success',
-                    message: 'delete patient'
-                });
-        })
-        .catch(function (error) {
-            console.log('ERROR:', error)
-        })
-}
 function getpatient(req, res) {
     db.any(`select bednumber,an,patient.hn,title,name,surname,dischargedate
     from treatmenthistory,patient
@@ -456,6 +431,6 @@ module.exports = {
     getscore,
     getpatient,
     insertpatient,
-    updatepatientInformation,
-    deletepatientInformation
+    updatepatient,
+    // deletepatientInformation
 }
