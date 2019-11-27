@@ -7,6 +7,7 @@ function getVitalSigns(req, res) {
     on vitalsign.an = treatmenthistory.an
     inner join employee 
     on vitalsign.empid = employee.empid
+    where treatmenthistory.dischargedate is null
     order by bednumber, date DESC`)
         .then(function (data) {
             res.status(200)
@@ -157,6 +158,7 @@ function getBedNumber(req, res) {
     db.any(`select vitalsign.an, bednumber, max(date)
     from vitalsign inner join treatmenthistory
     on vitalsign.an = treatmenthistory.an
+    where treatmenthistory.dischargedate is null
     group by bednumber, vitalsign.an
     order by bednumber`)
         .then(function (data) {
