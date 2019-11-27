@@ -120,22 +120,19 @@ function insertVitalSigns(req, res, next) {
                 ]
             }
             console.log(updatedData.status[0][vs[0]]);
-
             console.log('req.body[vs[0]]', req.body[vs[0]]);
 
-            for(var i = 0; i < vs.length-1; i++){
-                console.log('req.body[vs[i]]',req.body[vs[i]]);
-                console.log('updatedData.status[0][vs[i]]',updatedData.status[0][vs[i]]);
-                console.log('updatedData.status[0][vs[i]]',updatedData.status[11][vs[i]]);
-                if(req.body[vs[i]] != null ){
+            for (var i = 0; i < vs.length - 1; i++) {
+                console.log('req.body[vs[i]]', req.body[vs[i]]);
+                console.log('updatedData.status[0][vs[i]]', updatedData.status[0][vs[i]]);
+                console.log('updatedData.status[0][vs[i]]', updatedData.status[11][vs[i]]);
+                if (req.body[vs[i]] != null) {
                     updatedData.status[i][vs[i]] = true
-                    if(req.body.fallrisk == 0 && i == 11){
+                    if (req.body.fallrisk == 0 && i == 11) {
                         updatedData.status[11].fallrisk = false
                     }
                 }
             }
-            
-
             req.data = updatedData;
             res.status(200)
                 .json({
@@ -180,13 +177,6 @@ function getBedNumber(req, res) {
 }
 
 function getBedInfo(req, res) {
-    // db.any(`select patient.hn, treatmenthistory.an, title, name, surname, dob, admitdate, max(remark)
-    // from patient inner join treatmenthistory
-    // on patient.hn = treatmenthistory.hn
-    // inner join vitalsign
-    // on treatmenthistory.an = vitalsign.an
-    // where treatmenthistory.an = '` + req.params.id + `'
-    // group by patient.hn, treatmenthistory.an`)
     db.any(`select patient.hn, treatmenthistory.an, title, name, surname, dob, admitdate, last_value(remark) over (order by remark) as max
     from patient inner join treatmenthistory
     on patient.hn = treatmenthistory.hn
@@ -335,6 +325,70 @@ function getLastestVS(req, res) {
         })
 }
 
+function getpatientInformation(req, res) {
+    db.any(`select bednumber, an, patient.hn, title, name, surname, dob, admitdate, dischargedate
+    from treatmenthistory inner join patient
+    on treatmenthistory.hn = patient.hn
+    where an = '` + req.params.an + `'`)
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'Retrieved patient infomation of an:' + req.params.id
+                });
+        })
+        .catch(function (error) {
+            res.status(500)
+                .json({
+                    status: 'failed',
+                    message: 'Failed to retrieved patient infomation of an:' +
+                        req.params.id
+                });
+        })
+}
+
+function getpatient(req, res) {
+    db.any(`select bednumber,an,patient.hn,title,name,surname,dischargedate
+    from treatmenthistory,patient
+    where treatmenthistory.hn = patient.hn
+	and dischargedate is null`)
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'Retrieved patient list'
+                });
+        })
+        .catch(function (error) {
+            res.status(500)
+                .json({
+                    status: 'failed',
+                    message: 'Failed to retrieved patient list'
+                });
+        })
+}
+
+function getscore(req, res) {
+    db.any(`select * from score`)
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'Retrieved score'
+                });
+        })
+        .catch(function (error) {
+            res.status(500)
+                .json({
+                    status: 'failed',
+                    message: 'Failed to retrieved score'
+                });
+        })
+}
+
 module.exports = {
     getVitalSigns,
     getVitalSignByID,
@@ -344,5 +398,7 @@ module.exports = {
     getBedNumber,
     getBedInfo,
     getLastestVS,
-
+    getpatientInformation,
+    getscore,
+    getpatient
 }
