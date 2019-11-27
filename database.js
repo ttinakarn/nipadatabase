@@ -118,7 +118,7 @@ function insertVitalSigns(req, res, next) {
                     { painscore: false },
                     { fallrisk: false },
                     { remark: false },
-                    { action: false}
+                    { action: false }
                 ]
             }
             console.log(updatedData.status[0][vs[0]]);
@@ -350,7 +350,60 @@ function getpatientInformation(req, res) {
                 });
         })
 }
+function insertpatient(req, res) {
+    db.none('insert into patient(hn, title, name, surname) values(${hn}, ${title}, ${name}, ${surname})',
+        req.body)
+        .then(function (data1) {
+            console.log("data1", data);
+            
+            db.none('insert into treatmenthistory( bednumber, an, hn, admitdate ) values(${bednumber}, ${an}, ${hn}, ${admitdate})',
+                req.body)
+                .then(function (data2) {
+                    console.log("data2", data2);
+                    
+                    res.status(200)
+                        .json({
+                            status: 'success',
+                            data: data1, data2, 
+                            message: 'Inserted new patient'
+                        });
+                })
+                .catch(function (error) {
+                    console.log('ERROR:', error)
+                });
+        })
+        .catch(function (error) {
+            console.log('ERROR:', error)
+        });
+}
 
+function updatepatientInformation(req, res) {
+    db.none('update patientInformation set bednumber=${bednumber} ,an= ${an},hn= ${hn}, title= ${title}, name= ${name}, surname= ${surname}, dob= ${dob}, admitdate= ${admitdate}, dischargedate= ${dischargedate} ' + 'where id=' + req.params.id, req.body)
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    message: 'Update information'
+                });
+        })
+        .catch(function (error) {
+            console.log('ERROR:', error)
+        })
+}
+function deletepatientInformation(req, res) {
+    db.none('delete from patientInformation' + 'where an=' + req.params.an)
+
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    message: 'delete patient'
+                });
+        })
+        .catch(function (error) {
+            console.log('ERROR:', error)
+        })
+}
 function getpatient(req, res) {
     db.any(`select bednumber,an,patient.hn,title,name,surname,dischargedate
     from treatmenthistory,patient
@@ -403,5 +456,8 @@ module.exports = {
     getLastestVS,
     getpatientInformation,
     getscore,
-    getpatient
+    getpatient,
+    insertpatient,
+    updatepatientInformation,
+    deletepatientInformation
 }
