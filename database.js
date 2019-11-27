@@ -181,8 +181,10 @@ function getBedInfo(req, res) {
     db.any(`select patient.hn, treatmenthistory.an, title, name, surname, dob, admitdate
     from patient inner join treatmenthistory
     on patient.hn = treatmenthistory.hn
-    where treatmenthistory.an = '` + req.params.id +`'
-    group by patient.hn, treatmenthistory.an
+    inner join vitalsign
+    on treatmenthistory.an = vitalsign.an
+    where treatmenthistory.an = '` + req.params.id + `'
+    group by patient.hn, treatmenthistory.an, remark
 	limit 1`)
         .then(function (data) {
             res.status(200)
