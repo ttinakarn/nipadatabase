@@ -178,13 +178,11 @@ function getBedNumber(req, res) {
 }
 
 function getBedInfo(req, res) {
-    db.any(`select patient.hn, treatmenthistory.an, title, name, surname, dob, admitdate, last_value(remark) over (order by remark) as max
+    db.any(`select patient.hn, treatmenthistory.an, title, name, surname, dob, admitdate
     from patient inner join treatmenthistory
     on patient.hn = treatmenthistory.hn
-    inner join vitalsign
-    on treatmenthistory.an = vitalsign.an
-    where treatmenthistory.an = '` + req.params.id + `'
-    group by patient.hn, treatmenthistory.an, remark
+    where treatmenthistory.an = '` + req.params.id +`'
+    group by patient.hn, treatmenthistory.an
 	limit 1`)
         .then(function (data) {
             res.status(200)
