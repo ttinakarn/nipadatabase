@@ -2,7 +2,7 @@ const pgp = require('pg-promise')();
 var db = pgp('postgres://grbrxjrhauptjn:19388487ac4fc3ef3eeea4094c17e9aa5fd0774510bdd7db513c481c0ea31d41@ec2-174-129-227-51.compute-1.amazonaws.com:5432/d6b3313j3l8qt5?ssl=true');
 
 function getVitalSigns(req, res) {
-    db.any(`select vitalsign.an, date, bednumber, temp, pulse, resp, sbp, dbp, o2sat, eye, verbal, motor, urine, painscore, fallrisk, remark, name, sos
+    db.any(`select vitalsign.an, date, bednumber, temp, pulse, resp, sbp, dbp, o2sat, eye, verbal, motor, urine, painscore, fallrisk, remark, name
     from treatmenthistory inner join vitalsign
     on vitalsign.an = treatmenthistory.an
     inner join employee 
@@ -27,7 +27,7 @@ function getVitalSigns(req, res) {
 }
 
 function getVitalSignByID(req, res) {
-    db.any(`select patient.title, patient.name as patientname, patient.surname as patientsurname, vitalsign.an, patient.hn, bednumber, temp, pulse, resp, sbp, dbp, o2sat, eye, verbal, motor, urine, painscore, fallrisk, remark, employee.name as name, date, sos
+    db.any(`select patient.title, patient.name as patientname, patient.surname as patientsurname, vitalsign.an, patient.hn, bednumber, temp, pulse, resp, sbp, dbp, o2sat, eye, verbal, motor, urine, painscore, fallrisk, remark, employee.name as name, date
     from patient inner join treatmenthistory 
 	on patient.hn = treatmenthistory.hn
 	inner join vitalsign
@@ -123,18 +123,18 @@ function insertVitalSigns(req, res, next) {
 
             console.log('req.body[vs[0]]', req.body[vs[0]]);
 
-            for (var i = 0; i < vs.length - 1; i++) {
-                console.log('req.body[vs[i]]', req.body[vs[i]]);
-                console.log('updatedData.status[0][vs[i]]', updatedData.status[0][vs[i]]);
-                console.log('updatedData.status[0][vs[i]]', updatedData.status[11][vs[i]]);
-                if (req.body[vs[i]] != null) {
+            for(var i = 0; i < vs.length-1; i++){
+                console.log('req.body[vs[i]]',req.body[vs[i]]);
+                console.log('updatedData.status[0][vs[i]]',updatedData.status[0][vs[i]]);
+                console.log('updatedData.status[0][vs[i]]',updatedData.status[11][vs[i]]);
+                if(req.body[vs[i]] != null ){
                     updatedData.status[i][vs[i]] = true
-                    if (req.body.fallrisk == 0 && i == 11) {
+                    if(req.body.fallrisk == 0 && i == 11){
                         updatedData.status[11].fallrisk = false
                     }
                 }
             }
-
+            
 
             req.data = updatedData;
             res.status(200)
@@ -209,82 +209,6 @@ function getBedInfo(req, res) {
                     status: 'failed',
                     message: 'Failed to retrieved bed infomation of an:' +
                         req.params.id
-                });
-        })
-}
-
-function getpatient(req, res){
-
-    db.any(`select bednumber,an,patient.hn,title,name,surname
-    from treatmenthistory,patient
-    where treatmenthistory.hn = patient.hn
-    and dischargedate is null 
-    order by bednumber`)
-
-    .then(function (data) {
-        res.status(200)
-            .json({
-                status: 'success',
-                data: data,
-                message: 'success to getpatient' 
-            });
-    })
-    .catch(function (error) {
-        console.log(error);
-        res.status(500)
-            .json({
-                status: 'failed',
-                message: 'Failed to getpatient' 
-            });
-    })
-
-    }
-
-
-function getpatientInformation(req, res){
-
-db.any(`select bednumber,an,patient.hn,title,name,surname,dob,admitdate,dischargedate
-from treatmenthistory inner join patient
-on treatmenthistory.hn = patient.hn
-where an = '` + req.params.an + `'`)
-
-.then(function (data) {
-    res.status(200)
-        .json({
-            status: 'success',
-            data: data,
-            message: 'success to getpatient' + req.params.an
-        });
-})
-.catch(function (error) {
-    console.log(error);
-    res.status(500)
-        .json({
-            status: 'failed',
-            message: 'Failed to getpatient' + req.params.an
-        });
-})
-
-}
-
-function getscore(req, res) {
-
-    db.any(`select * from score`)
-
-        .then(function (data) {
-            res.status(200)
-                .json({
-                    status: 'success',
-                    data: data,
-                    message: 'success to getscore'
-                });
-        })
-        .catch(function (error) {
-            console.log(error);
-            res.status(500)
-                .json({
-                    status: 'failed',
-                    message: 'Failed to getscore'
                 });
         })
 }
@@ -420,8 +344,5 @@ module.exports = {
     getBedNumber,
     getBedInfo,
     getLastestVS,
-    getpatientInformation,
-    getscore,
-    getpatient
 
 }
