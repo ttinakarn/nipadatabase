@@ -350,7 +350,7 @@ function insertpatient(req, res) {
     db.none('insert into patient(hn, title, name, surname) values(${hn}, ${title}, ${name}, ${surname})',
         req.body)
         .then(function (data1) {
-            console.log("data1", data);
+            console.log("data1", data1);
             
             db.none('insert into treatmenthistory( bednumber, an, hn, admitdate ) values(${bednumber}, ${an}, ${hn}, ${admitdate})',
                 req.body)
