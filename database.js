@@ -399,6 +399,29 @@ function updatepatient(req, res) {
             });
 }
 
+function deletepatient(req, res) {
+    db.none("delete from treatmenthistory " +  "where an= '" + req.params.an + "'", req.body)
+    .then(function (data) {
+
+    db.none("delete from patient" + "where hn= '" + req.body.hn + "'", req.body)
+.then(function (data2) {
+    console.log("data2", data2);
+    res.status(200)
+                    .json({
+                        status: 'success',
+                        data:data,data2,
+                        message: 'Update success'
+                    });
+                })
+                .catch(function (error) {
+                    console.log('ERROR:', error)
+                });
+        })
+        .catch(function (error) {
+            console.log('ERROR:', error)
+        });
+}
+
 function getpatient(req, res) {
     db.any(`select bednumber,an,patient.hn,title,name,surname,dischargedate
     from treatmenthistory,patient
@@ -454,5 +477,5 @@ module.exports = {
     getpatient,
     insertpatient,
     updatepatient,
-    // deletepatientInformation
+    deletepatient
 }
