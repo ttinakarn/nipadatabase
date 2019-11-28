@@ -378,11 +378,15 @@ function insertpatient(req, res) {
 }
 
 function updatepatient(req, res) {
-    db.none('update treatmenthistory set an= ${an}, admitdate= ${admitdate}, dischargedate= ${dischargedate}, hn= ${hn}, bednumber= ${bednumber}' + 'where an=' + req.params.an, req.body)
+    console.log(req.params.an);
+    console.log(JSON.stringify(req.body));
+    
+    db.none("update treatmenthistory set an=${an}, admitdate=${admitdate}, dischargedate=${dischargedate}, hn=${hn}, bednumber=${bednumber}" +  "where an= '" + req.params.an + "'", req.body)
         .then(function (data) {
             res.status(200)
                 .json({
                     status: 'success',
+                    data:data,
                     message: 'Update success'
                 });
         })
