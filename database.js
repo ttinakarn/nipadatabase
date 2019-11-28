@@ -178,7 +178,7 @@ function getBedNumber(req, res) {
 }
 
 function getBedInfo(req, res) {
-    db.any(`select patient.hn, treatmenthistory.an, title, name, surname, dob, admitdate
+    db.any(`select patient.hn, treatmenthistory.an, title, name, surname, dob, admitdate, bednumber
     from patient inner join treatmenthistory
     on patient.hn = treatmenthistory.hn
     where treatmenthistory.an = '` + req.params.id +`'
