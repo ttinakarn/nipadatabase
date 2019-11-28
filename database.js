@@ -377,6 +377,20 @@ function insertpatient(req, res) {
         });
 }
 
+function updatepatient(req, res) {
+    db.none('update treatmenthistory set an= ${an}, admitdate= ${admitdate}, dischargedate= ${dischargedate}, hn= ${hn}, bednumber= ${bednumber}' + 'where an=' + req.params.an, req.body)
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    message: 'Update success'
+                });
+        })
+        .catch(function (error) {
+            console.log('ERROR:', error)
+        })
+}
+
 function getpatient(req, res) {
     db.any(`select bednumber,an,patient.hn,title,name,surname,dischargedate
     from treatmenthistory,patient
