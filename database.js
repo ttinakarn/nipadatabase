@@ -348,8 +348,7 @@ function getpatientInformation(req, res) {
         })
 }
 function insertpatient(req, res) {
-    db.none('insert into patient(hn, title, name, surname) values(${hn}, ${title}, ${name}, ${surname})',
-        req.body)
+    db.none('insert into patient(hn, title, name, surname) values(${hn}, ${title}, ${name}, ${surname})', req.body)
         .then(function (data1) {
             console.log("data1", data1);
             
