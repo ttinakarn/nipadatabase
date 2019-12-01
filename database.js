@@ -349,7 +349,7 @@ function getpatientInformation(req, res) {
         })
 }
 function insertpatient(req, res) {
-    db.none('insert into patient(hn, title, name, surname, dob) values(${hn}, ${title}, ${name}, ${surname}), ${dob}', req.body)
+    db.none('insert into patient(hn, title, name, surname, dob) values(${hn}, ${title}, ${name}, ${surname}, ${dob})', req.body)
         .then(function (data1) {
             db.none('insert into treatmenthistory( bednumber, an, hn, admitdate ) values(${bednumber}, ${an}, ${hn}, ${admitdate})',
                 req.body)
