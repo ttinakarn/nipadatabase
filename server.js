@@ -25,16 +25,6 @@ app.get('/', function (req, res) {
     res.send('Express is running');
 });
 
-// app.get('/api/update', function (req, res) {
-
-    
-//     // if (_socket) {
-
-//     //     _socket.emit('dataUpdated', "Updated data at " +  );
-
-//     //     res.send(new Date().toUTCString())
-//     // }
-// });
 var output = {
     status: 'success',
     message: 'REST API is working'
@@ -47,15 +37,9 @@ app.get('/api/json', function (req, res) {
 app.post('/api/vitalsign/', db.insertVitalSigns, (req, res) => {
    console.log('dataUpdated') ;
    console.log(_socket);
-   console.log(req.data);
-   
-   
+   console.log(req.data);  
    if (_socket) {
-
         _socket.emit('dataUpdated',req.data);
-
-       
-
     }
 });
 
@@ -66,10 +50,11 @@ app.put('/api/patientInformation/:an', db.updatepatient);
 app.delete('/api/patientInformation/:an', db.deletepatient);
 
 app.get('/api/dischargepatient', db.getdischargepatient);
-app.put('/api/dischargedate/:an', db.updatedischarge)
+app.put('/api/dischargepatient/:an', db.updatedischarge)
 
 app.get('/api/vitalsign/', db.getVitalSigns);
 app.get('/api/vitalsign/:id', db.getVitalSignByID);
+app.get('/api/getLastestVS/:id', db.getLastestVS);
 
 app.get('/api/condition/', db.getCondition);
 app.get('/api/condition/:id', db.getConditionByID);
@@ -78,10 +63,7 @@ app.get('/api/score/', db.getscore);
 app.get('/api/bednumber', db.getBedNumber);
 app.get('/api/getBedInfo/:id', db.getBedInfo);
 
-app.get('/api/getLastestVS/:id', db.getLastestVS);
-
 app.get('/api/admithistory/:hn' , db.getadmithistory);
-
 
 var port = process.env.PORT || 8080;
 http.listen(port, function () {
