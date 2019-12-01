@@ -183,7 +183,7 @@ function getBedInfo(req, res) {
     db.any(`select patient.hn, treatmenthistory.an, title, name, surname, dob, admitdate, bednumber
     from patient inner join treatmenthistory
     on patient.hn = treatmenthistory.hn
-    where treatmenthistory.an = '` + req.params.id +`'
+    where treatmenthistory.an = '` + req.params.id + `'
     group by patient.hn, treatmenthistory.an
 	limit 1`)
         .then(function (data) {
@@ -357,7 +357,7 @@ function insertpatient(req, res) {
                     res.status(200)
                         .json({
                             status: 'success',
-                            data: data1, data2, 
+                            data: data1, data2,
                             message: 'Inserted new patient'
                         });
                 })
@@ -374,41 +374,18 @@ function updatepatient(req, res) {
     console.log(req.params.an);
     console.log(JSON.stringify(req.body));
 
-    db.none("update treatmenthistory set an=${an}, admitdate=${admitdate}, dischargedate=${dischargedate}, hn=${hn}, bednumber=${bednumber}" +  "where an= '" + req.params.an + "'", req.body)
+    db.none("update treatmenthistory set an=${an}, admitdate=${admitdate}, dischargedate=${dischargedate}, hn=${hn}, bednumber=${bednumber}" + "where an= '" + req.params.an + "'", req.body)
         .then(function (data) {
 
-    db.none("update patient set hn=${hn}, title=${title}, name=${name}, surname=${surname}, dob=${dob}" + "where hn= '" + req.body.hn + "'", req.body)
-    .then(function (data2) {
-        console.log("data2", data2);
-        res.status(200)
+            db.none("update patient set hn=${hn}, title=${title}, name=${name}, surname=${surname}, dob=${dob}" + "where hn= '" + req.body.hn + "'", req.body)
+                .then(function (data2) {
+                    console.log("data2", data2);
+                    res.status(200)
                         .json({
                             status: 'success',
-                            data:data,data2,
+                            data: data, data2,
                             message: 'Update success'
                         });
-                    })
-                    .catch(function (error) {
-                        console.log('ERROR:', error)
-                    });
-            })
-            .catch(function (error) {
-                console.log('ERROR:', error)
-            });
-}
-
-function deletepatient(req, res) {
-    db.none("delete from treatmenthistory " +  "where an= '" + req.params.an + "'", req.body)
-    .then(function (data) {
-
-    db.none("delete from patient" + "where hn= '" + req.body.hn + "'", req.body)
-.then(function (data2) {
-    console.log("data2", data2);
-    res.status(200)
-                    .json({
-                        status: 'success',
-                        data:data,data2,
-                        message: 'Update success'
-                    });
                 })
                 .catch(function (error) {
                     console.log('ERROR:', error)
@@ -417,6 +394,52 @@ function deletepatient(req, res) {
         .catch(function (error) {
             console.log('ERROR:', error)
         });
+}
+
+function deletepatient(req, res) {
+    db.none("delete from treatmenthistory " + "where an= '" + req.params.an + "'", req.body)
+        .then(function (data) {
+
+            db.none("delete from patient" + "where hn= '" + req.body.hn + "'", req.body)
+                .then(function (data2) {
+                    console.log("data2", data2);
+                    res.status(200)
+                        .json({
+                            status: 'success',
+                            data: data, data2,
+                            message: 'Update success'
+                        });
+                })
+                .catch(function (error) {
+                    console.log('ERROR:', error)
+                });
+        })
+        .catch(function (error) {
+            console.log('ERROR:', error)
+        });
+}
+
+function getdischargepatient(req, res) {
+    db.any(`select patient.hn, title, name, surname
+    from patient inner join treatmenthistory
+    on patient.hn = treatmenthistory.hn
+    where dischargedate is not null`
+    )
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'getdischargepatient'
+                });
+        })
+        .catch(function (error) {
+            res.status(500)
+                .json({
+                    status: 'failed',
+                    message: 'Failed to getdischargepatient'
+                });
+        })
 }
 
 function getpatient(req, res) {
@@ -475,5 +498,6 @@ module.exports = {
     getpatient,
     insertpatient,
     updatepatient,
-    deletepatient
+    deletepatient,
+    getdischargepatient
 }
