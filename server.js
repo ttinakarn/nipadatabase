@@ -56,7 +56,7 @@ app.get('/api/admithistory/:hn' , db.getadmithistory);
 
 app.get('/api/vitalsign/', db.getVitalSigns);
 app.get('/api/vitalsign/:id', db.getVitalSignByID);
-app.get('/api/getLastestVS/:id', db.getLastestVS);
+app.get('/api/lastestVS/:id', db.getLastestVS);
 
 app.get('/api/condition/', db.getCondition);
 app.get('/api/condition/:id', db.getConditionByID);
