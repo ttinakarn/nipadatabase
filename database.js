@@ -28,7 +28,7 @@ function getVitalSigns(req, res) {
 }
 
 function getVitalSignByID(req, res) {
-    db.any(`select patient.title, patient.name as patientname, patient.surname as patientsurname, vitalsign.an, patient.hn, bednumber, temp, pulse, resp, sbp, dbp, o2sat, eye, verbal, motor, urine, painscore, fallrisk, remark, employee.name as name, date, sos, action
+    db.any(`select patient.title, patient.name as patientname, patient.surname as patientsurname, vitalsign.an, patient.hn, admitdate, dischargedate, bednumber, temp, pulse, resp, sbp, dbp, o2sat, eye, verbal, motor, urine, painscore, fallrisk, remark, employee.name as name, date, sos, action
     from patient inner join treatmenthistory 
 	on patient.hn = treatmenthistory.hn
 	inner join vitalsign
@@ -396,28 +396,28 @@ function updatepatient(req, res) {
         });
 }
 
-function deletepatient(req, res) {
-    db.none("delete from treatmenthistory " + "where an= '" + req.params.an + "'", req.body)
-        .then(function (data) {
+// function deletepatient(req, res) {
+//     db.none("delete from treatmenthistory " + "where an= '" + req.params.an + "'", req.body)
+//         .then(function (data) {
 
-            db.none("delete from patient" + "where hn= '" + req.body.hn + "'", req.body)
-                .then(function (data2) {
-                    console.log("data2", data2);
-                    res.status(200)
-                        .json({
-                            status: 'success',
-                            data: data, data2,
-                            message: 'Update success'
-                        });
-                })
-                .catch(function (error) {
-                    console.log('ERROR:', error)
-                });
-        })
-        .catch(function (error) {
-            console.log('ERROR:', error)
-        });
-}
+//             db.none("delete from patient" + "where hn= '" + req.body.hn + "'", req.body)
+//                 .then(function (data2) {
+//                     console.log("data2", data2);
+//                     res.status(200)
+//                         .json({
+//                             status: 'success',
+//                             data: data, data2,
+//                             message: 'Update success'
+//                         });
+//                 })
+//                 .catch(function (error) {
+//                     console.log('ERROR:', error)
+//                 });
+//         })
+//         .catch(function (error) {
+//             console.log('ERROR:', error)
+//         });
+// }
 
 function updatedischarge(req, res) {
 
