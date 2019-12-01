@@ -419,6 +419,30 @@ function deletepatient(req, res) {
         });
 }
 
+function updatedischarge(req, res) {
+
+    db.none("update treatmenthistory set an=${an}, admitdate=${admitdate}, hn=${hn}, bednumber=${bednumber}" + "where an= '" + req.params.an + "'", req.body)
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'getdischargepatient'
+                });
+        })
+        .catch(function (error) {
+            res.status(500)
+                .json({
+                    status: 'failed',
+                    message: 'Failed to getdischargepatient'
+                });
+        })
+
+
+
+
+}
+
 
 
 function getdischargepatient(req, res) {
@@ -524,5 +548,6 @@ module.exports = {
     updatepatient,
     deletepatient,
     getdischargepatient,
-    getadmithistory
+    getadmithistory,
+    updatedischarge
 }
