@@ -421,7 +421,7 @@ function deletepatient(req, res) {
 
 function updatedischarge(req, res) {
 
-    db.none("update treatmenthistory set an=${an}, admitdate=${admitdate}, hn=${hn}, bednumber=${bednumber}" + "where an= '" + req.params.an + "'", req.body)
+    db.none("update treatmenthistory set dischargedate=${dischargedate}" + "where an= '" + req.params.an + "'", req.body)
         .then(function (data) {
             res.status(200)
                 .json({
