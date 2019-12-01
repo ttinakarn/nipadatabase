@@ -183,7 +183,7 @@ function getBedInfo(req, res) {
     db.any(`select patient.hn, treatmenthistory.an, title, name, surname, dob, admitdate, bednumber
     from patient inner join treatmenthistory
     on patient.hn = treatmenthistory.hn
-    where treatmenthistory.an = '` + req.params.id + `'
+    where treatmenthistory.an = '` + req.params.an + `'
     group by patient.hn, treatmenthistory.an
 	limit 1`)
         .then(function (data) {
@@ -546,7 +546,7 @@ module.exports = {
     getpatient,
     insertpatient,
     updatepatient,
-    deletepatient,
+    // deletepatient,
     getdischargepatient,
     getadmithistory,
     updatedischarge
