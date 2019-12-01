@@ -25,16 +25,6 @@ app.get('/', function (req, res) {
     res.send('Express is running');
 });
 
-// app.get('/api/update', function (req, res) {
-
-    
-//     // if (_socket) {
-
-//     //     _socket.emit('dataUpdated', "Updated data at " +  );
-
-//     //     res.send(new Date().toUTCString())
-//     // }
-// });
 var output = {
     status: 'success',
     message: 'REST API is working'
@@ -47,41 +37,33 @@ app.get('/api/json', function (req, res) {
 app.post('/api/vitalsign/', db.insertVitalSigns, (req, res) => {
    console.log('dataUpdated') ;
    console.log(_socket);
-   console.log(req.data);
-   
-   
+   console.log(req.data);  
    if (_socket) {
-
         _socket.emit('dataUpdated',req.data);
-
-       
-
     }
 });
+
+app.get('/api/patient/', db.getpatient);
+app.get('/api/patient/:an', db.getpatientInformation);
 app.post('/api/patient', db.insertpatient);
-app.put('/api/patientInformation/:an', db.updatepatient);
-app.put('/api/dischargedate/:an', db.updatedischarge)
-// app.delete('/api/patientInformation/:an', db.deletepatient);
+app.put('/api/patient/:an', db.updatepatient);
+app.delete('/api/patient/:an', db.deletepatient);
+
+app.get('/api/dischargepatient', db.getdischargepatient);
+app.put('/api/dischargepatient/:an', db.updatedischarge);
+
+app.get('/api/admithistory/:hn' , db.getadmithistory);
+
 app.get('/api/vitalsign/', db.getVitalSigns);
 app.get('/api/vitalsign/:id', db.getVitalSignByID);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> parent of f5a27c6... update api
-app.get('/api/getLastestVS/:id', db.getLastestVS);
+app.get('/api/lastestVS/:id', db.getLastestVS);
 
->>>>>>> parent of f5a27c6... update api
 app.get('/api/condition/', db.getCondition);
 app.get('/api/condition/:id', db.getConditionByID);
-app.get('/api/bednumber', db.getBedNumber);
-app.get('/api/getBedInfo/:id', db.getBedInfo);
-app.get('/api/getLastestVS/:id', db.getLastestVS);
-app.get('/api/patientInformation/:an', db.getpatientInformation);
 app.get('/api/score/', db.getscore);
-app.get('/api/patient/', db.getpatient);
-app.get('/api/dischargepatient', db.getdischargepatient);
-app.get('/api/admithistory/:hn' , db.getadmithistory);
+
+app.get('/api/bednumber', db.getBedNumber);
+app.get('/api/bednumber/:id', db.getBedInfo);
 
 var port = process.env.PORT || 8080;
 http.listen(port, function () {
