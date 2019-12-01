@@ -446,7 +446,7 @@ function updatedischarge(req, res) {
 
 
 function getdischargepatient(req, res) {
-    db.any(`select patient.hn, title, name, surname
+    db.any(`select distinct patient.hn, title, name, surname
     from patient inner join treatmenthistory
     on patient.hn = treatmenthistory.hn
     where dischargedate is not null`)
@@ -472,7 +472,7 @@ function getadmithistory(req, res) {
     from patient inner join treatmenthistory
     on patient.hn = treatmenthistory.hn
     where dischargedate is not null
-    and treatmenthistory.an = '` + req.params.an + `'`)
+    and treatmenthistory.hn = '` + req.params.hn + `'`)
         .then(function (data) {
             res.status(200)
                 .json({
