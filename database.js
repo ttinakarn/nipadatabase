@@ -472,7 +472,7 @@ function getadmithistory(req, res) {
     from patient inner join treatmenthistory
     on patient.hn = treatmenthistory.hn
     where dischargedate is not null
-    and treatmenthistory.an = '` + req.params.id + `'`)
+    and treatmenthistory.an = '` + req.params.an + `'`)
         .then(function (data) {
             res.status(200)
                 .json({
