@@ -58,22 +58,30 @@ app.post('/api/vitalsign/', db.insertVitalSigns, (req, res) => {
 
     }
 });
+
+app.get('/api/patient/', db.getpatient);
+app.get('/api/patientInformation/:an', db.getpatientInformation);
 app.post('/api/patient', db.insertpatient);
 app.put('/api/patientInformation/:an', db.updatepatient);
-app.put('/api/dischargedate/:an', db.updatedischarge)
 app.delete('/api/patientInformation/:an', db.deletepatient);
+
+app.get('/api/dischargepatient', db.getdischargepatient);
+app.put('/api/dischargedate/:an', db.updatedischarge)
+
 app.get('/api/vitalsign/', db.getVitalSigns);
 app.get('/api/vitalsign/:id', db.getVitalSignByID);
+
 app.get('/api/condition/', db.getCondition);
 app.get('/api/condition/:id', db.getConditionByID);
+app.get('/api/score/', db.getscore);
+
 app.get('/api/bednumber', db.getBedNumber);
 app.get('/api/getBedInfo/:id', db.getBedInfo);
+
 app.get('/api/getLastestVS/:id', db.getLastestVS);
-app.get('/api/patientInformation/:an', db.getpatientInformation);
-app.get('/api/score/', db.getscore);
-app.get('/api/patient/', db.getpatient);
-app.get('/api/dischargepatient', db.getdischargepatient);
+
 app.get('/api/admithistory/:hn' , db.getadmithistory);
+
 
 var port = process.env.PORT || 8080;
 http.listen(port, function () {
