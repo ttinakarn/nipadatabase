@@ -64,6 +64,11 @@ app.put('/api/dischargedate/:an', db.updatedischarge)
 // app.delete('/api/patientInformation/:an', db.deletepatient);
 app.get('/api/vitalsign/', db.getVitalSigns);
 app.get('/api/vitalsign/:id', db.getVitalSignByID);
+<<<<<<< HEAD
+=======
+app.get('/api/getLastestVS/:id', db.getLastestVS);
+
+>>>>>>> parent of f5a27c6... update api
 app.get('/api/condition/', db.getCondition);
 app.get('/api/condition/:id', db.getConditionByID);
 app.get('/api/bednumber', db.getBedNumber);
