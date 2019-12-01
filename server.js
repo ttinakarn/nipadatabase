@@ -65,7 +65,10 @@ app.put('/api/dischargedate/:an', db.updatedischarge)
 app.get('/api/vitalsign/', db.getVitalSigns);
 app.get('/api/vitalsign/:id', db.getVitalSignByID);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of f5a27c6... update api
 app.get('/api/getLastestVS/:id', db.getLastestVS);
 
 >>>>>>> parent of f5a27c6... update api
