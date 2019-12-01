@@ -52,11 +52,7 @@ app.post('/api/vitalsign/', db.insertVitalSigns, (req, res) => {
    
    if (_socket) {
 
-        _socket.emit('dataUpdated',req.data);
-
-       
-
-    }
+        _socket.emit('dataUpdated',req.data);    }
 });
 app.post('/api/patient', db.insertpatient);
 app.put('/api/dischargedate', db.updatedischarge);
