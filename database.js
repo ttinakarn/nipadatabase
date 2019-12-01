@@ -370,11 +370,11 @@ function insertpatient(req, res) {
         });
 }
 
-function updatedischarge(req, res) {
+function updatepatient(req, res) {
     console.log(req.params.an);
     console.log(JSON.stringify(req.body));
 
-    db.none("update treatmenthistory set an=${an}, admitdate=${admitdate}, dischargedate=${dischargedate}, hn=${hn}, bednumber=${bednumber}" + "where an= '" + req.params.an + "'", req.body)
+    db.none("update treatmenthistory set an=${an}, admitdate=${admitdate}, hn=${hn}, bednumber=${bednumber}" + "where an= '" + req.params.an + "'", req.body)
         .then(function (data) {
 
             db.none("update patient set hn=${hn}, title=${title}, name=${name}, surname=${surname}, dob=${dob}" + "where hn= '" + req.body.hn + "'", req.body)
@@ -521,7 +521,7 @@ module.exports = {
     getscore,
     getpatient,
     insertpatient,
-    updatedischarge,
+    updatepatient,
     deletepatient,
     getdischargepatient,
     getadmithistory
