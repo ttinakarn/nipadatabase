@@ -59,7 +59,7 @@ app.post('/api/vitalsign/', db.insertVitalSigns, (req, res) => {
     }
 });
 app.post('/api/patient', db.insertpatient);
-app.put('/api/patientInformation/:an', db.updatepatient);
+app.put('/api/dischargedate', db.updatedischarge);
 app.delete('/api/patientInformation/:an', db.deletepatient);
 app.get('/api/vitalsign/', db.getVitalSigns);
 app.get('/api/vitalsign/:id', db.getVitalSignByID);
