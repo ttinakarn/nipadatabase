@@ -348,15 +348,11 @@ function getpatientInformation(req, res) {
         })
 }
 function insertpatient(req, res) {
-    db.none('insert into patient(hn, title, name, surname) values(${hn}, ${title}, ${name}, ${surname})', req.body)
+    db.none('insert into patient(hn, title, name, surname, dob) values(${hn}, ${title}, ${name}, ${surname}), ${dob}', req.body)
         .then(function (data1) {
-            console.log("data1", data1);
-            
             db.none('insert into treatmenthistory( bednumber, an, hn, admitdate ) values(${bednumber}, ${an}, ${hn}, ${admitdate})',
                 req.body)
                 .then(function (data2) {
-                    console.log("data2", data2);
-                    
                     res.status(200)
                         .json({
                             status: 'success',
