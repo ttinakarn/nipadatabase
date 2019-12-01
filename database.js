@@ -419,12 +419,13 @@ function deletepatient(req, res) {
         });
 }
 
+
+
 function getdischargepatient(req, res) {
     db.any(`select patient.hn, title, name, surname
     from patient inner join treatmenthistory
     on patient.hn = treatmenthistory.hn
-    where dischargedate is not null`
-    )
+    where dischargedate is not null`)
         .then(function (data) {
             res.status(200)
                 .json({
@@ -438,6 +439,29 @@ function getdischargepatient(req, res) {
                 .json({
                     status: 'failed',
                     message: 'Failed to getdischargepatient'
+                });
+        })
+}
+
+function getadmithistory(req, res) {
+    db.any(`select an, title, name, surname, admitdate, dischargedate
+    from patient inner join treatmenthistory
+    on patient.hn = treatmenthistory.hn
+    where dischargedate is not null
+    and treatmenthistory.an = '` + req.params.id + `'`)
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'getadmithistory'
+                });
+        })
+        .catch(function (error) {
+            res.status(500)
+                .json({
+                    status: 'failed',
+                    message: 'Failed to getadmithistory'
                 });
         })
 }
@@ -499,5 +523,6 @@ module.exports = {
     insertpatient,
     updatepatient,
     deletepatient,
-    getdischargepatient
+    getdischargepatient,
+    getadmithistory
 }

@@ -72,6 +72,7 @@ app.get('/api/patientInformation/:an', db.getpatientInformation);
 app.get('/api/score/', db.getscore);
 app.get('/api/patient/', db.getpatient);
 app.get('/api/dischargepatient', db.getdischargepatient);
+app.get('api/admithistory' , db.getadmithistory);
 
 var port = process.env.PORT || 8080;
 http.listen(port, function () {
