@@ -22,7 +22,7 @@ function getVitalSigns(req, res) {
             res.status(500)
                 .json({
                     status: 'failed',
-                    message: 'Failed to retrieved vital signs'
+                    message: 'Failed to retrieve vital signs'
                 });
         })
 }
@@ -35,7 +35,7 @@ function getVitalSignByID(req, res) {
     on vitalsign.an = treatmenthistory.an
     inner join employee
     on vitalsign.empid = employee.empid
-    where vitalsign.an = '` + req.params.id + `'
+    where vitalsign.an = '` + req.params.an + `'
     order by date`
     )
         .then(function (data) {
@@ -43,14 +43,14 @@ function getVitalSignByID(req, res) {
                 .json({
                     status: 'success',
                     data: data,
-                    message: 'Retrieved vitalsign an:' + req.params.id
+                    message: 'Retrieved vitalsign an:' + req.params.an
                 });
         })
         .catch(function (error) {
             res.status(500)
                 .json({
                     status: 'failed',
-                    message: 'Failed to retrieved vitalsign vsid:' +
+                    message: 'Failed to retrieve vitalsign an:' +
                         req.params.id
                 });
         })
@@ -71,7 +71,7 @@ function getCondition(req, res) {
             res.status(500)
                 .json({
                     status: 'failed',
-                    message: 'Failed to retrieved condition'
+                    message: 'Failed to retrieve condition'
                 });
         })
 }
@@ -90,7 +90,7 @@ function getConditionByID(req, res) {
             res.status(500)
                 .json({
                     status: 'failed',
-                    message: 'Failed to condition conid:' +
+                    message: 'Failed to retrieve condition conid:' +
                         req.params.id
                 });
         })
@@ -139,7 +139,7 @@ function insertVitalSigns(req, res, next) {
             res.status(200)
                 .json({
                     status: 'success',
-                    message: 'Inserted one vitalsign'
+                    message: 'Inserted vital sign successfully'
                 });
             next();
 
@@ -174,7 +174,7 @@ function getBedNumber(req, res) {
             res.status(500)
                 .json({
                     status: 'failed',
-                    message: 'Failed to retrieved  bed number'
+                    message: 'Failed to retrieve bed number'
                 });
         })
 }
@@ -191,15 +191,15 @@ function getBedInfo(req, res) {
                 .json({
                     status: 'success',
                     data: data,
-                    message: 'Retrieved bed infomation of an:' + req.params.id
+                    message: 'Retrieved bed infomation of an:' + req.params.an
                 });
         })
         .catch(function (error) {
             res.status(500)
                 .json({
                     status: 'failed',
-                    message: 'Failed to retrieved bed infomation of an:' +
-                        req.params.id
+                    message: 'Failed to retrieve bed infomation of an:' +
+                        req.params.an
                 });
         })
 }
@@ -212,91 +212,91 @@ function getLastestVS(req, res) {
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id + `'
+                and vitalsign.an = '`+ req.params.an + `'
                 and temp is not null
                 order by date desc limit 1) as temp,
                 (select pulse 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id + `'
+                and vitalsign.an = '`+ req.params.an + `'
                 and pulse is not null
                 order by date desc limit 1) as pulse,
                 (select resp 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id + `'
+                and vitalsign.an = '`+ req.params.an + `'
                 and resp is not null
                 order by date desc limit 1) as resp,
                 (select sbp 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id + `'
+                and vitalsign.an = '`+ req.params.an + `'
                 and sbp is not null
                 order by date desc limit 1) as sbp,
                 (select dbp 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber
-                and vitalsign.an = '`+ req.params.id + `'
+                and vitalsign.an = '`+ req.params.an + `'
                 and dbp is not null
                 order by date desc limit 1) as dbp,
                 (select o2sat 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id + `'
+                and vitalsign.an = '`+ req.params.an + `'
                 and o2sat is not null
                 order by date desc limit 1) as o2sat,
                 (select eye 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id + `'
+                and vitalsign.an = '`+ req.params.an + `'
                 and eye is not null
                 order by date desc limit 1) as eye,
                 (select verbal 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id + `'
+                and vitalsign.an = '`+ req.params.an + `'
                 and verbal is not null
                 order by date desc limit 1) as verbal,
                 (select motor 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id + `'
+                and vitalsign.an = '`+ req.params.an + `'
                 and motor is not null
                 order by date desc limit 1) as motor,
                 (select urine 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id + `'
+                and vitalsign.an = '`+ req.params.an + `'
                 and urine is not null
                 order by date desc limit 1) as urine,
                 (select painscore 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id + `'
+                and vitalsign.an = '`+ req.params.an + `'
                 and painscore is not null
                 order by date desc limit 1) as painscore,
                 (select fallrisk 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id + `'
+                and vitalsign.an = '`+ req.params.an + `'
                 and fallrisk is not null
                 order by date desc limit 1) as fallrisk,
                 (select remark 
                 from vitalsign inner join treatmenthistory
                 on vitalsign.an = treatmenthistory.an 
                 where bednumber = treatmenthistory.bednumber 
-                and vitalsign.an = '`+ req.params.id + `'
+                and vitalsign.an = '`+ req.params.an + `'
                 and remark is not null
                 order by date desc limit 1) as remark
             from patient inner join treatmenthistory
@@ -305,7 +305,7 @@ function getLastestVS(req, res) {
             on treatmenthistory.an = vitalsign.an
             inner join employee
             on vitalsign.empid = employee.empid
-            where treatmenthistory.an = '`+ req.params.id + `'
+            where treatmenthistory.an = '`+ req.params.an + `'
             group by bednumber, patient.title, patient.name, patient.surname, 
             employee.title, employee.name, employee.surname`)
         .then(function (data) {
@@ -313,15 +313,15 @@ function getLastestVS(req, res) {
                 .json({
                     status: 'success',
                     data: data,
-                    message: 'Retrieved bed infomation of an:' + req.params.id
+                    message: 'Retrieved lastest vital sign of an:' + req.params.an
                 });
         })
         .catch(function (error) {
             res.status(500)
                 .json({
                     status: 'failed',
-                    message: 'Failed to retrieved bed infomation of an:' +
-                        req.params.id
+                    message: 'Failed to retrieve lastest vital sign of an:' +
+                        req.params.an
                 });
         })
 }
@@ -336,29 +336,35 @@ function getpatientInformation(req, res) {
                 .json({
                     status: 'success',
                     data: data,
-                    message: 'Retrieved patient infomation of an:' + req.params.id
+                    message: 'Retrieved patient infomation of an:' + req.params.an
                 });
         })
         .catch(function (error) {
             res.status(500)
                 .json({
                     status: 'failed',
-                    message: 'Failed to retrieved patient infomation of an:' +
-                        req.params.id
+                    message: 'Failed to retrieve patient infomation of an:' +
+                        req.params.an
                 });
         })
 }
 function insertpatient(req, res) {
     db.none('insert into patient(hn, title, name, surname, dob) values(${hn}, ${title}, ${name}, ${surname}, ${dob})', req.body)
-        .then(function (data1) {
+        .then(function (data) {
+            res.status(200)
+                        .json({
+                            status: 'success',
+                            data: data,
+                            message: 'Inserted new patient to table patient'
+                        });
             db.none('insert into treatmenthistory( bednumber, an, hn, admitdate ) values(${bednumber}, ${an}, ${hn}, ${admitdate})',
                 req.body)
-                .then(function (data2) {
+                .then(function (data) {
                     res.status(200)
                         .json({
                             status: 'success',
-                            data: data1, data2,
-                            message: 'Inserted new patient'
+                            data: data,
+                            message: 'Inserted new patient to table treatmenthistory'
                         });
                 })
                 .catch(function (error) {
@@ -376,15 +382,20 @@ function updatepatient(req, res) {
 
     db.none("update treatmenthistory set an=${an}, admitdate=${admitdate}, hn=${hn}, bednumber=${bednumber}" + "where an= '" + req.params.an + "'", req.body)
         .then(function (data) {
-
+            res.status(200)
+                        .json({
+                            status: 'success',
+                            data: data,
+                            message: "Updated patient's information in table treatmenthistory successfully"
+                        });
             db.none("update patient set hn=${hn}, title=${title}, name=${name}, surname=${surname}, dob=${dob}" + "where hn= '" + req.body.hn + "'", req.body)
-                .then(function (data2) {
-                    console.log("data2", data2);
+                .then(function (data) {
+                    console.log("data", data);
                     res.status(200)
                         .json({
                             status: 'success',
-                            data: data, data2,
-                            message: 'Update success'
+                            data: data,
+                            message: "Updated patient's information in table patient successfully"
                         });
                 })
                 .catch(function (error) {
@@ -427,14 +438,14 @@ function updatedischarge(req, res) {
                 .json({
                     status: 'success',
                     data: data,
-                    message: 'getdischargepatient'
+                    message: "Updated discharge date successfully"
                 });
         })
         .catch(function (error) {
             res.status(500)
                 .json({
                     status: 'failed',
-                    message: 'Failed to getdischargepatient'
+                    message: 'Failed to update discharge date'
                 });
         })
 
@@ -455,14 +466,14 @@ function getdischargepatient(req, res) {
                 .json({
                     status: 'success',
                     data: data,
-                    message: 'getdischargepatient'
+                    message: "Retrieved discharged patients"
                 });
         })
         .catch(function (error) {
             res.status(500)
                 .json({
                     status: 'failed',
-                    message: 'Failed to getdischargepatient'
+                    message: 'Failed to retrieve discharged patients'
                 });
         })
 }
@@ -478,14 +489,14 @@ function getadmithistory(req, res) {
                 .json({
                     status: 'success',
                     data: data,
-                    message: 'getadmithistory'
+                    message: 'Retrieved admited history of hn:' + req.params.hn
                 });
         })
         .catch(function (error) {
             res.status(500)
                 .json({
                     status: 'failed',
-                    message: 'Failed to getadmithistory'
+                    message: 'Failed to retrieve admited history of hn:' + req.params.hn
                 });
         })
 }
@@ -508,7 +519,7 @@ function getpatient(req, res) {
             res.status(500)
                 .json({
                     status: 'failed',
-                    message: 'Failed to retrieved patient list'
+                    message: 'Failed to retrieve patient list'
                 });
         })
 }
@@ -527,7 +538,7 @@ function getscore(req, res) {
             res.status(500)
                 .json({
                     status: 'failed',
-                    message: 'Failed to retrieved score'
+                    message: 'Failed to retrieve score'
                 });
         })
 }
