@@ -352,11 +352,11 @@ function insertpatient(req, res) {
     db.none('insert into patient(hn, title, name, surname, dob) values(${hn}, ${title}, ${name}, ${surname}, ${dob})', req.body)
         .then(function (data) {
             res.status(200)
-                        .json({
-                            status: 'success',
-                            data: data,
-                            message: 'Inserted new patient to table patient'
-                        });
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'Inserted new patient to table patient'
+                });
             db.none('insert into treatmenthistory( bednumber, an, hn, admitdate ) values(${bednumber}, ${an}, ${hn}, ${admitdate})',
                 req.body)
                 .then(function (data) {
@@ -383,11 +383,11 @@ function updatepatient(req, res) {
     db.none("update treatmenthistory set an=${an}, admitdate=${admitdate}, hn=${hn}, bednumber=${bednumber}" + "where an= '" + req.params.an + "'", req.body)
         .then(function (data) {
             res.status(200)
-                        .json({
-                            status: 'success',
-                            data: data,
-                            message: "Updated patient's information in table treatmenthistory successfully"
-                        });
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: "Updated patient's information in table treatmenthistory successfully"
+                });
             db.none("update patient set hn=${hn}, title=${title}, name=${name}, surname=${surname}, dob=${dob}" + "where hn= '" + req.body.hn + "'", req.body)
                 .then(function (data) {
                     console.log("data", data);
@@ -453,7 +453,53 @@ function updatedischarge(req, res) {
 
 
 }
+function getlasttemp8vitalsign(req, res) {
+    db.any(`select temp, date
+    from vitalsign 
+    where an = '` + req.params.an + `'
+    and temp is not null
+    order by date desc
+    limit 8`)
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: "Retrieved temp lastest  8 vital sign" + req.params.an
+                });
+        })
+        .catch(function (error) {
+            res.status(500)
+                .json({
+                    status: 'failed',
+                    message: "Failed to retrieve temp lastest 8 vital sign" + req.params.an
+                });
+        })
+}
 
+function getlastpulse8vitalsign(req, res) {
+    db.any(`select pulse, date
+    from vitalsign 
+    where an = '` + req.params.an + `'
+    and pulse is not null
+    order by date desc
+    limit 8`)
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: "Retrieved pulse lastest  8 vital sign" + req.params.an
+                });
+        })
+        .catch(function (error) {
+            res.status(500)
+                .json({
+                    status: 'failed',
+                    message: "Failed to retrieve pulse lastest 8 vital sign" + req.params.an
+                });
+        })
+}
 
 
 function getdischargepatient(req, res) {
@@ -543,6 +589,7 @@ function getscore(req, res) {
         })
 }
 
+
 module.exports = {
     getVitalSigns,
     getVitalSignByID,
@@ -560,5 +607,7 @@ module.exports = {
     // deletepatient,
     getdischargepatient,
     getadmithistory,
-    updatedischarge
+    updatedischarge,
+    getlasttemp8vitalsign,
+    getlastpulse8vitalsign
 }

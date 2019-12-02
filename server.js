@@ -57,6 +57,8 @@ app.get('/api/admithistory/:hn' , db.getadmithistory);
 app.get('/api/vitalsign/', db.getVitalSigns);
 app.get('/api/vitalsign/:an', db.getVitalSignByID);
 app.get('/api/lastestVS/:an', db.getLastestVS);
+app.get('/api/lasttemp8vitalsign/:an', db.getlasttemp8vitalsign);
+app.get('/api/lastpulse8vitalsign/:an', db.getlastpulse8vitalsign);
 
 app.get('/api/condition/', db.getCondition);
 app.get('/api/condition/:id', db.getConditionByID);
@@ -64,6 +66,8 @@ app.get('/api/score/', db.getscore);
 
 app.get('/api/bednumber', db.getBedNumber);
 app.get('/api/bednumber/:an', db.getBedInfo);
+
+
 
 var port = process.env.PORT || 8080;
 http.listen(port, function () {
