@@ -592,7 +592,7 @@ function getscore(req, res) {
 function checklogin(req, res) {
     db.any("select empid, name from employee where username = $1 and password = $2", [req.body.username, req.body.password])
         .then(function (data) {
-            if(data.length != 0){
+            if(data.length){
                 res.status(200)
                 .json({
                     status: 'success',
@@ -602,6 +602,7 @@ function checklogin(req, res) {
             } else {
                 res.status(500)
                 .json({
+                    data: data,
                     status: 'failed',
                     message: 'Username or password is incorrect'
                 });
