@@ -600,7 +600,7 @@ function checklogin(req, res) {
                     message: 'login success'
                 });
             } else {
-                res.status(500)
+                res.status(200)
                 .json({
                     data: data,
                     status: 'failed',
@@ -614,6 +614,8 @@ function checklogin(req, res) {
                     status: 'failed',
                     message: 'Failed to login'
                 });
+            console.log(error);
+                
         })
 }
 
