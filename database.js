@@ -589,6 +589,25 @@ function getscore(req, res) {
         })
 }
 
+function checklogin(req, res) {
+    db.any("select empid, name from employee where username = $1 and password = $2", [req.body.username, req.body.password])
+        .then(function (data) {
+            res.status(200)
+                .json({
+                    status: 'success',
+                    data: data,
+                    message: 'login success'
+                });
+        })
+        .catch(function (error) {
+            res.status(500)
+                .json({
+                    status: 'failed',
+                    message: 'Failed to login'
+                });
+        })
+}
+
 
 module.exports = {
     getVitalSigns,
@@ -609,5 +628,6 @@ module.exports = {
     getadmithistory,
     updatedischarge,
     getlasttemp8vitalsign,
-    getlastpulse8vitalsign
+    getlastpulse8vitalsign,
+    checklogin
 }

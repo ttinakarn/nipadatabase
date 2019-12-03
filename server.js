@@ -34,6 +34,7 @@ app.get('/api/json', function (req, res) {
     res.status(500).json(output);
 });
 
+
 app.post('/api/vitalsign/', db.insertVitalSigns, (req, res) => {
    console.log('dataUpdated') ;
    console.log(_socket);
@@ -67,6 +68,7 @@ app.get('/api/score/', db.getscore);
 app.get('/api/bednumber', db.getBedNumber);
 app.get('/api/bednumber/:an', db.getBedInfo);
 
+app.post('/api/login/', db.checklogin);
 
 
 var port = process.env.PORT || 8080;
